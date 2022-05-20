@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+
+<robot name="eureca" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- <xacro:include filename="$(find lampo_description)/urdf/sweepee/camera.urdf.xacro" /> -->
+
+  <xacro:property name="M_PI" value="3.14159"/>
+
+
+  <!-- Base Size -->
+  <xacro:property name="base_x_size" value="1.02" />
+  <xacro:property name="base_y_size" value="0.55" />
+  <xacro:property name="base_z_size" value="0.35" />
+
+  <xacro:macro name="sweepee" params="prefix *origin">
+  
+    <!-- Base footprint is on the ground under the robot -->
+    <link name="${prefix}base_footprint">
+      <inertial>
+          <mass value="1000" />
+          <inertia ixx="0.001" ixy="0.01" ixz="0.01" iyy="0.001" iyz="0.01" izz="0.001" />
+      </inertial>
+      <collision>
+        <origin xyz="0 0 0.005" rpy="0 0 0" />
+        <geometry>
+          <box size="${base_x_size} ${base_y_size} 0.01"/>
+        </geometry>
+      </collision>
+    </link>  
+    <!-- Base link is the center of the robot's bottom plate -->
+    <link name="${prefix}base_link_sweepee">
+      <visual>
+        <origin xyz="0 0 0.032" rpy="0 0 -${M_PI/2}" />
+        <geometry>
+          <mesh filename="package://lampo_description/meshes/sweepee/visual/sweepee.dae"/>
+        </geometry>
+        <material name="Gray">
+          <color rgba="0.5 0.5 0.5 1.0" />
+        </material>
+      </visual>
+      <inertial>
+          <mass value="4000" />
+          <inertia ixx="1.48454" ixy="0.01" ixz="0.01" iyy="3.02861" iyz="0.01" izz="4.10178" />
+      </inertial>
+    </link>
+
+    <joint name="${prefix}base_footprint_joint" type="fixed">
+      <xacro:insert_block name="origin"/> 
+      <parent link="${prefix}base_footprint" />
+      <child link="${prefix}base_link_sweepee" />
+      <dynamics damping="0.7"/>
+    </joint>
+
+    <link name="${prefix}front_laser" />
+    <joint name="${prefix}front_laser_joint" type="fixed">
+      <origin xyz="${base_x_size/2-0.15} 0.0 ${base_z_size/2+0.085}" rpy="0 0 0" />
+      <parent link="${prefix}base_link_sweepee" />
+      <child link="${prefix}front_laser" />
+    </joint>
+
+      <link name="${prefix}rear_laser" />
+    <joint name="${prefix}rear_laser_joint" type="fixed">
+      <origin xyz="${-base_x_size/2+0.15} 0.0 ${base_z_size/2+0.085}" rpy="0 0 ${M_PI}" />
+      <parent link="${prefix}base_link_sweepee" />
+      <child link="${prefix}rear_laser" />
+    </joint>
+
+  <gazebo reference="${prefix}rear_laser">
+      <sensor type="ray" name="$(arg prefix)rear_laser">
+          <!-- <pose>0 0 0 0 0 0</pose> -->
+          <!-- <visualize>false</visualize> -->
+          <update_rate>10</update_rate>
+          <ray>
+              <scan display="false">
+                  <horizontal>
+                      <samples>750</samples>
+                      <resolution>1</resolution>
+                      <min_angle>-${M_PI /2}</min_angle>
+                      <max_angle> ${M_PI /2}</max_angle>
+                  </horizontal>
+              </scan>
+              <range>
+                  <min>0.25</min>
+                  <max>59.0</max>
+              </range>
+          </ray>
+          <plugin filename="libgazebo_ros_ray_sensor.so" name="rear_laser_plugin">
+              <!-- <robotNamespace></robotNamespace> -->
+              <noise>
+                  <type>gaussian</type>
+                  <mean>0.0</mean>
+                  <stddev>0.01</stddev>
+              </noise>
+              <ros>
+                <namespace>${prefix}</namespace>
+                <argument>~out:=${prefix}rear_scan</argument>        
+              </ros>
+              <alwaysOn>true</alwaysOn>
+              <updateRate>15</updateRate>
+              <!-- <frameName>rear_laser</frameName> -->
+              <frame_name>${prefix}rear_laser</frame_name>
+              <output_type>sensor_msgs/LaserScan</output_type>
+          </plugin>
+      </sensor>
+  </gazebo>
+
+<gazebo reference="${prefix}front_laser">
+      <sensor type="ray" name="${prefix}front_laser">
+          <!-- <pose>0 0 0 0 0 0</pose> -->
+          <!-- <visualize>false</visualize> -->
+          <update_rate>10</update_rate>
+          <ray>
+              <scan display="false">
+                  <horizontal>
+                      <samples>750</samples>
+                      <resolution>1</resolution>
+                      <min_angle>-${M_PI /2}</min_angle>
+                      <max_angle> ${M_PI /2}</max_angle>
+                  </horizontal>
+              </scan>
+              <range>
+                  <min>0.25</min>
+                  <max>59.0</max>
+              </range>
+          </ray>
+          <plugin filename="libgazebo_ros_ray_sensor.so" name="front_laser_plugin">
+              <!-- <robotNamespace></robotNamespace> -->
+              <noise>
+                  <type>gaussian</type>
+                  <mean>0.0</mean>
+                  <stddev>0.01</stddev>
+              </noise>
+              <ros>
+                <namespace>${prefix}</namespace>
+                <argument>~out:=${prefix}rear_scan</argument>           
+              </ros>
+              <alwaysOn>true</alwaysOn>
+              <updateRate>15</updateRate>
+              <!-- <frameName>front_laser</frameName> -->
+              <frame_name>${prefix}front_laser</frame_name>
+              <output_type>sensor_msgs/LaserScan</output_type>
+          </plugin>
+      </sensor>
+  </gazebo>
+
+  </xacro:macro>
+
+
+</robot>
