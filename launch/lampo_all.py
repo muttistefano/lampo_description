@@ -112,7 +112,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "use_fake_hardware",
-            default_value='true',
+            default_value='false',
             description="use_fake_hardware",
         )
     )
@@ -215,14 +215,14 @@ def generate_launch_description():
         parameters=[robot_description_2,frame_prefix_param_2],
     )
 
-    spawn_sweepee_1 = Node(package='gazebo_ros', executable='spawn_entity.py',#namespace="sweepee_1",
-                            arguments=['-entity', 'sw1', "-topic", "sweepee_1/robot_description",
+    spawn_sweepee_1 = Node(package='gazebo_ros', executable='spawn_entity.py',namespace="sweepee_2",
+                            arguments=['-entity', 'sw1',"-file", os.path.join(get_package_share_directory('lampo_description'),'urdf','sw1.sdf'),
                                        "-robot_namespace","sweepee_1",
                                        "-y"," 2"],
                             output='screen')
 
-    spawn_sweepee_2 = Node(package='gazebo_ros', executable='spawn_entity.py',#namespace="sweepee_2",
-                            arguments=['-entity', 'sw2', "-topic", "sweepee_2/robot_description",
+    spawn_sweepee_2 = Node(package='gazebo_ros', executable='spawn_entity.py',namespace="sweepee_2",
+                            arguments=['-entity', 'sw2', "-file", os.path.join(get_package_share_directory('lampo_description'),'urdf','sw2.sdf'),
                                        "-robot_namespace","sweepee_2",
                                        "-y"," -2"],
                             output='screen')
@@ -235,7 +235,7 @@ def generate_launch_description():
         namespace="sweepee_1",
         executable="ros2_control_node",
         parameters=[robot_description_1,initial_joint_controllers_1 ],
-        output="screen",
+        output="log",
     )
 
     control_node_2 = Node(
@@ -243,14 +243,14 @@ def generate_launch_description():
         namespace="sweepee_2",
         executable="ros2_control_node",
         parameters=[robot_description_2,initial_joint_controllers_2 ],
-        output="screen",
+        output="log",
     )
 
     joint_state_broadcaster_spawner_1 = Node(
         package="controller_manager",
         namespace="sweepee_1",
         executable="spawner",
-        output="screen",
+        output="log",
         arguments=["joint_state_broadcaster", "-c", "sweepee_1/controller_manager"],
     )
 
@@ -258,7 +258,7 @@ def generate_launch_description():
         package="controller_manager",
         namespace="sweepee_2",
         executable="spawner",
-        output="screen",
+        output="log",
         arguments=["joint_state_broadcaster", "-c", "sweepee_2/controller_manager"],
     )
 
@@ -266,7 +266,7 @@ def generate_launch_description():
         package="controller_manager",
         namespace="sweepee_1",
         executable="spawner",
-        output="screen",
+        output="log",
         arguments=["joint_trajectory_controller", "-c", "sweepee_1/controller_manager"],
     )
 
@@ -274,7 +274,7 @@ def generate_launch_description():
         package="controller_manager",
         namespace="sweepee_2",
         executable="spawner",
-        output="screen",
+        output="log",
         arguments=["joint_trajectory_controller", "-c", "sweepee_2/controller_manager"],
     )
 
@@ -326,7 +326,7 @@ def generate_launch_description():
                         get_package_share_directory('gazebo_ros'),
                         'launch/gazebo.launch.py')),
                         launch_arguments={'world': os.path.join(get_package_share_directory('lampo_description'),'worlds/world.world'),
-                                          'verbose' : 'true' ,
+                                          'verbose' : 'false' ,
                                           'pause' : 'false'}.items(),
             ),
         ]
@@ -340,21 +340,21 @@ def generate_launch_description():
         package="rviz2",
         executable="rviz2",
         name="rviz2",
-        output="log",
+        output="screen",
         arguments=["-d", rviz_config_file],
     )
 
     tf_sw1 = Node(
             package="tf2_ros",
             executable="static_transform_publisher",
-            output="screen" ,
+            output="log" ,
             arguments=["0", "0", "0", "0", "0", "0", "map", "sweepee_1/odom"]
         )
 
     tf_sw2 = Node(
             package="tf2_ros",
             executable="static_transform_publisher",
-            output="screen" ,
+            output="log" ,
             arguments=["0", "0", "0", "0", "0", "0", "map", "sweepee_2/odom"]
         )
 
@@ -363,22 +363,24 @@ def generate_launch_description():
 
     nodes_to_start = [
         gazebo_server,
+        # rviz_node,
         TimerAction(
             period=2.0,
-            actions=[spawn_sweepee_1,robot_state_publisher_node_1,control_node_1],
+            # actions=[spawn_sweepee_1,robot_state_publisher_node_1,control_node_1],
+            actions=[robot_state_publisher_node_1,spawn_sweepee_1],
         ),
         TimerAction(
-            period=4.0,
+            period=5.0,
             actions=[joint_state_broadcaster_spawner_1,initial_joint_controller_spawner_started_1]
         ),
-        # TimerAction(
-        #     period=8.0,
-        #     actions=[spawn_sweepee_2,robot_state_publisher_node_2,control_node_2],
-        # ),
-        # TimerAction(
-        #     period=12.0,
-        #     actions=[joint_state_broadcaster_spawner_2,initial_joint_controller_spawner_started_2]
-        # ),
+        TimerAction(
+            period=8.0,
+            actions=[spawn_sweepee_2,robot_state_publisher_node_2]#,control_node_2],
+        ),
+        TimerAction(
+            period=11.0,
+            actions=[joint_state_broadcaster_spawner_2,initial_joint_controller_spawner_started_2]
+        ),
         TimerAction(
             period=12.0,
             actions=[rviz_node,tf_sw1,tf_sw2],

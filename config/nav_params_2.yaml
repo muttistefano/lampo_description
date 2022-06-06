@@ -2,15 +2,15 @@ bt_navigator:
   ros__parameters:
     use_sim_time: True
     global_frame: map
-    robot_base_frame: sweepee_1/base_footprint
+    robot_base_frame: sweepee_2/base_footprint
     odom_topic: odom
     # default_bt_xml_filename: "navigate_w_replanning_distance.xml"
     default_nav_to_pose_bt_xml: "/home/kolmogorov/Documents/2ROS/lampo_ws_ros2_rolling/install/nav2_bt_navigator/share/nav2_bt_navigator/behavior_trees/lampo.xml"
     bt_loop_duration: 10
     default_server_timeout: 20
     enable_groot_monitoring: True
-    groot_zmq_publisher_port: 1666
-    groot_zmq_server_port: 1667
+    groot_zmq_publisher_port: 1668
+    groot_zmq_server_port: 1669
     plugin_lib_names:
     - nav2_compute_path_to_pose_action_bt_node
     - nav2_compute_path_through_poses_action_bt_node
@@ -135,7 +135,7 @@ local_costmap:
       update_frequency: 5.0
       publish_frequency: 2.0
       global_frame: map
-      robot_base_frame: sweepee_1/base_footprint
+      robot_base_frame: sweepee_2/base_footprint
       map_topic: /map
       use_sim_time: True
       rolling_window: true
@@ -153,7 +153,7 @@ local_costmap:
         enabled: True
         observation_sources: scan
         scan:
-          topic: /sweepee_1/front_laser_plugin/out
+          topic: /sweepee_2/front_laser_plugin/out
           max_obstacle_height: 2.0
           clearing: True
           marking: True
@@ -169,7 +169,7 @@ local_costmap:
         mark_threshold: 0
         observation_sources: scan
         scan:
-          topic: /sweepee_1/front_laser_plugin/out
+          topic: /sweepee_2/front_laser_plugin/out
           max_obstacle_height: 2.0
           clearing: True
           marking: True
@@ -194,7 +194,7 @@ global_costmap:
       update_frequency: 1.0
       publish_frequency: 1.0
       global_frame: map
-      robot_base_frame: sweepee_1/base_footprint
+      robot_base_frame: sweepee_2/base_footprint
       map_topic: /map
       use_sim_time: True
       robot_radius: 0.5
@@ -206,7 +206,7 @@ global_costmap:
         enabled: True
         observation_sources: scan
         scan:
-          topic: /sweepee_1/front_laser_plugin/out
+          topic: /sweepee_2/front_laser_plugin/out
           max_obstacle_height: 2.0
           clearing: True
           marking: True
@@ -237,7 +237,7 @@ planner_server:
     planner_plugins: ["GridBased"]
     GridBased:
       plugin: "nav2_shared_planner/SharedPlanner"
-      robot_frame: "sweepee_1/base_footprint"
+      robot_frame: "sweepee_2/base_footprint"
       tolerance: 0.5
       use_astar: false
       allow_unknown: true
@@ -259,7 +259,7 @@ recoveries_server:
     wait:
       plugin: "nav2_recoveries/Wait"
     global_frame: /map
-    robot_base_frame: sweepee_1/base_footprint
+    robot_base_frame: sweepee_2/base_footprint
     transform_timeout: 0.1
     use_sim_time: true
     simulate_ahead_time: 2.0

@@ -18,7 +18,7 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
+from launch.actions import DeclareLaunchArgument, TimerAction
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
@@ -49,6 +49,11 @@ def generate_launch_description():
             'config',
             "nav_params_1.yaml")
 
+    nav_sw2_params = os.path.join(
+            get_package_share_directory('lampo_description'),
+            'config',
+            "nav_params_2.yaml")
+
     nav_sw1 = GroupAction(
         actions=[PushRosNamespace('sweepee_1'),
                 IncludeLaunchDescription(
@@ -59,6 +64,28 @@ def generate_launch_description():
                                 'params_file': nav_sw1_params,
                                 'use_lifecycle_mgr': 'false',
                                 'map_subscribe_transient_local': 'true'}.items())])
-    nodes_to_start = [map_server,nav_sw1]
+
+    nav_sw2 = GroupAction(
+        actions=[PushRosNamespace('sweepee_2'),
+                IncludeLaunchDescription(
+                PythonLaunchDescriptionSource(os.path.join(get_package_share_directory('nav2_bringup'),"launch", 'navigation_launch.py')),
+                launch_arguments={'namespace': "sweepee_2",
+                                'use_sim_time': "true",
+                                'autostart': "true",
+                                'params_file': nav_sw2_params,
+                                'use_lifecycle_mgr': 'false',
+                                'map_subscribe_transient_local': 'true'}.items())])
+
+    nodes_to_start = [
+                map_server,
+                TimerAction(
+                period=2.0,
+                actions=[nav_sw1],
+                ),
+                TimerAction(
+                period=6.0,
+                actions=[nav_sw2],
+                ),
+                ]
 
     return LaunchDescription(nodes_to_start)

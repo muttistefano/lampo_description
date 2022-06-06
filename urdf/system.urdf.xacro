@@ -51,6 +51,26 @@
   <!-- convert to property to use substitution in function -->
   <xacro:property name="initial_positions_file" default="$(arg initial_positions_file)"/>
 
+  <xacro:property name="M_PI" value="3.14159"/>
+
+  <xacro:sweepee  prefix="$(arg prefix)">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:sweepee>
+
+  <xacro:sweepee_gazebo />
+
+  <xacro:if value="$(arg sim_gazebo)">
+    <gazebo reference="world">
+    </gazebo>
+    <gazebo>
+      <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+        <robot_param>robot_description</robot_param>
+        <robot_namespace>$(arg prefix)</robot_namespace>
+        <parameters>$(arg simulation_controllers)</parameters>
+        <robot_param_node>robot_state_publisher</robot_param_node>
+      </plugin>
+    </gazebo>
+  </xacro:if>
 
    <!-- arm -->
   <xacro:ur_robot
@@ -88,38 +108,23 @@
     <origin xyz="0 0 0" rpy="0 0 0" />          
   </xacro:ur_robot>
 
-  <xacro:if value="$(arg sim_gazebo)">
-    <gazebo reference="world">
-    </gazebo>
-    <gazebo>
-      <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
-        <robot_param>robot_description</robot_param>
-        <robot_namespace>$(arg prefix)</robot_namespace>
-        <parameters>$(arg simulation_controllers)</parameters>
-        <robot_param_node>robot_state_publisher</robot_param_node>
-      </plugin>
-    </gazebo>
-  </xacro:if>
 
-  <!-- <xacro:if value="$(arg sim_ignition)">
+
+  <xacro:if value="$(arg sim_ignition)">
     <gazebo reference="world">
     </gazebo>
     <gazebo>
       <plugin filename="libign_ros2_control-system.so" name="ign_ros2_control::IgnitionROS2ControlPlugin">
         <parameters>$(arg simulation_controllers)</parameters>
         <controller_manager_node_name>$(arg prefix)controller_manager</controller_manager_node_name>
+        <robot_param>robot_description</robot_param>
+        <robot_namespace>$(arg prefix)</robot_namespace>
+        <robot_param_node>robot_state_publisher</robot_param_node>
       </plugin>
     </gazebo>
-  </xacro:if> -->
+  </xacro:if>
 
 
-  <xacro:property name="M_PI" value="3.14159"/>
-
-  <xacro:sweepee  prefix="$(arg prefix)">
-    <origin xyz="0 0 0" rpy="0 0 0" />
-  </xacro:sweepee>
-
-  <xacro:sweepee_gazebo />
 
 
 
@@ -134,9 +139,6 @@
   <gazebo>
     <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
         <ros>
-          <!-- Add a namespace -->
-          <!-- <namespace>/</namespace> -->
-          <!-- Remap the default topic -->
           <argument>~cmd_vel:=custom_cmd_vel</argument>
           <argument>~odom:=custom_odom</argument>
         </ros>

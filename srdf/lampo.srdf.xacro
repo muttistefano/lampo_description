@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="eureca">
+
+  <!-- robot name parameter -->
+  <xacro:arg name="name" default="sweepee_1"/>
+  <!-- parameters -->
+  <xacro:arg name="prefix" default="" />
+
+  <xacro:include filename="$(find lampo_description)/srdf/lampo_macro.srdf.xacro"/>
+
+  <xacro:lampo_srdf name="$(arg name)" prefix="$(arg prefix)"/>
+
+</robot>
