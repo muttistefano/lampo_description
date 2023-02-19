@@ -215,7 +215,7 @@ def generate_launch_description():
         parameters=[robot_description_2,frame_prefix_param_2],
     )
 
-    spawn_sweepee_1 = Node(package='gazebo_ros', executable='spawn_entity.py',namespace="sweepee_2",
+    spawn_sweepee_1 = Node(package='gazebo_ros', executable='spawn_entity.py',namespace="sweepee_1",
                             arguments=['-entity', 'sw1',"-file", os.path.join(get_package_share_directory('lampo_description'),'urdf','sw1.sdf'),
                                        "-robot_namespace","sweepee_1",
                                        "-y"," 2"],
@@ -326,7 +326,7 @@ def generate_launch_description():
                         get_package_share_directory('gazebo_ros'),
                         'launch/gazebo.launch.py')),
                         launch_arguments={'world': os.path.join(get_package_share_directory('lampo_description'),'worlds/world.world'),
-                                          'verbose' : 'false' ,
+                                          'verbose' : 'true' ,
                                           'pause' : 'false'}.items(),
             ),
         ]
