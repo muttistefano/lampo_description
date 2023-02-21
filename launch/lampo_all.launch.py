@@ -47,7 +47,6 @@ def generate_launch_description():
             choices=["ur3", "ur3e", "ur5", "ur5e", "ur10", "ur10e", "ur16e"],
         )
     )
-
     declared_arguments.append(
         DeclareLaunchArgument(
             "frame_prefix",
@@ -55,7 +54,6 @@ def generate_launch_description():
             description="Enables the safety limits controller if true.",
         )
     )
-
     declared_arguments.append(
         DeclareLaunchArgument(
             "safety_limits",
@@ -71,20 +69,13 @@ def generate_launch_description():
         )
     )
     declared_arguments.append(
+
         DeclareLaunchArgument(
             "safety_k_position",
             default_value="20",
             description="k-position factor in the safety controller.",
         )
-    )
-    # declared_arguments.append(
-    #     DeclareLaunchArgument(
-    #         "simulation_controllers",
-    #         default_value=os.path.join(get_package_share_directory('ur_bringup'),'config/ur_controllers.yaml'),
-    #         description="ur controllers file",
-    #     )
-    # )
-    
+    )  
     declared_arguments.append(
         DeclareLaunchArgument(
             "description_package",
@@ -99,7 +90,6 @@ def generate_launch_description():
             description="URDF/XACRO description file with the robot.",
         )
     )
-
     declared_arguments.append(
         DeclareLaunchArgument(
             "prefix",
@@ -112,7 +102,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "use_fake_hardware",
-            default_value='false',
+            default_value='true',
             description="use_fake_hardware",
         )
     )
@@ -215,43 +205,54 @@ def generate_launch_description():
         parameters=[robot_description_2,frame_prefix_param_2],
     )
 
-    spawn_sweepee_1 = Node(package='gazebo_ros', executable='spawn_entity.py',namespace="sweepee_1",
-                            arguments=['-entity', 'sw1',"-file", os.path.join(get_package_share_directory('lampo_description'),'urdf','sw1.sdf'),
+    # spawn_sweepee_1 = Node(package='gazebo_ros', executable='spawn_entity.py',namespace="sweepee_1",
+    #                         arguments=['-entity', 'sw1',"-file", os.path.join(get_package_share_directory('lampo_description'),'urdf','sw1.sdf'),
+    #                                    "-robot_namespace","sweepee_1",
+    #                                    "-y"," 2"],
+    #                         output='screen')
+
+    # spawn_sweepee_2 = Node(package='gazebo_ros', executable='spawn_entity.py',namespace="sweepee_2",
+    #                         arguments=['-entity', 'sw2', "-file", os.path.join(get_package_share_directory('lampo_description'),'urdf','sw2.sdf'),
+    #                                    "-robot_namespace","sweepee_2",
+    #                                    "-y"," -2"],
+    #                         output='screen')
+
+    spawn_sweepee_1 = Node(package='gazebo_ros', executable='spawn_entity.py',name="spawn1",
+                            arguments=['-entity', 'sw1',"-topic", "sweepee_1/robot_description",
                                        "-robot_namespace","sweepee_1",
-                                       "-y"," 2"],
+                                       "-y"," 1"],
                             output='screen')
 
-    spawn_sweepee_2 = Node(package='gazebo_ros', executable='spawn_entity.py',namespace="sweepee_2",
-                            arguments=['-entity', 'sw2', "-file", os.path.join(get_package_share_directory('lampo_description'),'urdf','sw2.sdf'),
+    spawn_sweepee_2 = Node(package='gazebo_ros', executable='spawn_entity.py',name="spawn2",
+                            arguments=['-entity', 'sw2', "-topic", "sweepee_2/robot_description",
                                        "-robot_namespace","sweepee_2",
-                                       "-y"," -2"],
+                                       "-y"," -3"],
                             output='screen')
-
 
 ########## CONTROLLERS
 
-    control_node_1 = Node(
-        package="controller_manager",
-        namespace="sweepee_1",
-        executable="ros2_control_node",
-        parameters=[robot_description_1,initial_joint_controllers_1 ],
-        output="log",
-    )
+    # control_node_1 = Node(
+    #     package="controller_manager",
+    #     namespace="sweepee_1",
+    #     executable="ros2_control_node",
+    #     parameters=[robot_description_1,initial_joint_controllers_1 ],
+    #     output="log",
+    # )
 
-    control_node_2 = Node(
-        package="controller_manager",
-        namespace="sweepee_2",
-        executable="ros2_control_node",
-        parameters=[robot_description_2,initial_joint_controllers_2 ],
-        output="log",
-    )
+    # control_node_2 = Node(
+    #     package="controller_manager",
+    #     namespace="sweepee_2",
+    #     executable="ros2_control_node",
+    #     parameters=[robot_description_2,initial_joint_controllers_2 ],
+    #     output="log",
+    # )
 
     joint_state_broadcaster_spawner_1 = Node(
         package="controller_manager",
         namespace="sweepee_1",
         executable="spawner",
         output="log",
-        arguments=["joint_state_broadcaster", "-c", "sweepee_1/controller_manager"],
+        arguments=["joint_state_broadcaster", "-c", "controller_manager"],
     )
 
     joint_state_broadcaster_spawner_2 = Node(
@@ -259,7 +260,7 @@ def generate_launch_description():
         namespace="sweepee_2",
         executable="spawner",
         output="log",
-        arguments=["joint_state_broadcaster", "-c", "sweepee_2/controller_manager"],
+        arguments=["joint_state_broadcaster", "-c", "controller_manager"],
     )
 
     initial_joint_controller_spawner_started_1 = Node(
@@ -267,7 +268,7 @@ def generate_launch_description():
         namespace="sweepee_1",
         executable="spawner",
         output="log",
-        arguments=["joint_trajectory_controller", "-c", "sweepee_1/controller_manager"],
+        arguments=["joint_trajectory_controller", "-c", "controller_manager"],
     )
 
     initial_joint_controller_spawner_started_2 = Node(
@@ -275,7 +276,7 @@ def generate_launch_description():
         namespace="sweepee_2",
         executable="spawner",
         output="log",
-        arguments=["joint_trajectory_controller", "-c", "sweepee_2/controller_manager"],
+        arguments=["joint_trajectory_controller", "-c", "controller_manager"],
     )
 
 
@@ -365,25 +366,24 @@ def generate_launch_description():
         gazebo_server,
         # rviz_node,
         TimerAction(
-            period=2.0,
-            # actions=[spawn_sweepee_1,robot_state_publisher_node_1,control_node_1],
-            actions=[robot_state_publisher_node_1,spawn_sweepee_1],
+            period=1.0,
+            actions=[spawn_sweepee_1,robot_state_publisher_node_1]#control_node_1],
         ),
+        # TimerAction(
+        #     period=2.0,
+        #     actions=[joint_state_broadcaster_spawner_1,initial_joint_controller_spawner_started_1]
+        # ),
+        TimerAction(
+            period=3.0,
+            actions=[spawn_sweepee_2,robot_state_publisher_node_2]#control_node_2],
+        ),
+        # TimerAction(
+        #     period=18.0,
+        #     actions=[joint_state_broadcaster_spawner_2,initial_joint_controller_spawner_started_2]
+        # ),
         TimerAction(
             period=5.0,
-            actions=[joint_state_broadcaster_spawner_1,initial_joint_controller_spawner_started_1]
-        ),
-        TimerAction(
-            period=8.0,
-            actions=[spawn_sweepee_2,robot_state_publisher_node_2]#,control_node_2],
-        ),
-        TimerAction(
-            period=11.0,
-            actions=[joint_state_broadcaster_spawner_2,initial_joint_controller_spawner_started_2]
-        ),
-        TimerAction(
-            period=12.0,
-            actions=[rviz_node,tf_sw1,tf_sw2],
+            actions=[tf_sw1,tf_sw2],#rviz_node
         ),
         # TimerAction(
         #     period=14.0,

@@ -17,7 +17,7 @@
     <!-- Base footprint is on the ground under the robot -->
     <link name="${prefix}base_footprint">
       <inertial>
-          <mass value="1000" />
+          <mass value="10" />
           <inertia ixx="0.001" ixy="0.01" ixz="0.01" iyy="0.001" iyz="0.01" izz="0.001" />
       </inertial>
       <collision>
@@ -39,8 +39,8 @@
         </material>
       </visual>
       <inertial>
-          <mass value="4000" />
-          <inertia ixx="1.48454" ixy="0.01" ixz="0.01" iyy="3.02861" iyz="0.01" izz="4.10178" />
+          <mass value="40" />
+          <inertia ixx="0.48454" ixy="0.01" ixz="0.01" iyy="0.02861" iyz="0.01" izz="0.10178" />
       </inertial>
     </link>
 
@@ -98,9 +98,9 @@
               <output_type>sensor_msgs/LaserScan</output_type>
           </plugin>
       </sensor>
-  </gazebo> -->
+  </gazebo>  -->
 
-<!-- <gazebo reference="${prefix}front_laser">
+  <gazebo reference="${prefix}front_laser">
       <sensor type="ray" name="${prefix}front_laser">
           <update_rate>10</update_rate>
           <ray>
@@ -125,7 +125,7 @@
               </noise>
               <ros>
                 <namespace>${prefix}</namespace>
-                <argument>~out:=${prefix}rear_scan</argument>           
+                <argument>~out:=${prefix}front_scan</argument>           
               </ros>
               <alwaysOn>true</alwaysOn>
               <updateRate>15</updateRate>
@@ -133,7 +133,7 @@
               <output_type>sensor_msgs/LaserScan</output_type>
           </plugin>
       </sensor>
-  </gazebo> -->
+  </gazebo>
 
 <!-- <gazebo reference="${prefix}front_laser" >
   <sensor name="${prefix}front_laser" type="gpu_lidar">

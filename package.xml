@@ -12,8 +12,16 @@
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 
+  <build_depend>gazebo_ros</build_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+
+  <build_depend>ur_description</build_depend>
+  <exec_depend>ur_description</exec_depend>
+
+
   <export>
-    <gazebo_ros gazebo_model_path="${prefix}/meshes"/>
+    <!-- <gazebo_ros gazebo_model_path="${prefix}/meshes"/> -->
+    <gazebo_ros gazebo_model_path="${prefix}/.." /> 
     <gazebo_ros gazebo_media_path="${prefix}/meshes"/>
     <build_type>ament_cmake</build_type>
   </export>

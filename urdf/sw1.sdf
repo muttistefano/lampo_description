@@ -26,7 +26,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/kolmogorov/Documents/2ROS/lampo_ws_ros2_rolling/install/ur_description/share/ur_description/meshes/ur10/collision/base.stl</uri>
+            <uri>model://lampo_description/meshes/ur10/collision/base.stl</uri>
           </mesh>
         </geometry>
       </collision>
@@ -35,7 +35,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/kolmogorov/Documents/2ROS/lampo_ws_ros2_rolling/install/lampo_description/share/lampo_description//meshes/sweepee/visual/sweepee.dae</uri>
+            <uri>model://lampo_description/meshes/sweepee/visual/sweepee.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -44,7 +44,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/kolmogorov/Documents/2ROS/lampo_ws_ros2_rolling/install/ur_description/share/ur_description/meshes/ur10/visual/base.dae</uri>
+            <uri>model://lampo_description/meshes/ur10/visual/base.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -154,7 +154,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/kolmogorov/Documents/2ROS/lampo_ws_ros2_rolling/install/ur_description/share/ur_description/meshes/ur10/collision/shoulder.stl</uri>
+            <uri>model://lampo_description/meshes/ur10/collision/shoulder.stl</uri>
           </mesh>
         </geometry>
       </collision>
@@ -163,7 +163,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/kolmogorov/Documents/2ROS/lampo_ws_ros2_rolling/install/ur_description/share/ur_description/meshes/ur10/visual/shoulder.dae</uri>
+            <uri>model://lampo_description/meshes/ur10/visual/shoulder.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -207,7 +207,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/kolmogorov/Documents/2ROS/lampo_ws_ros2_rolling/install/ur_description/share/ur_description/meshes/ur10/collision/upperarm.stl</uri>
+            <uri>model://lampo_description/meshes/ur10/collision/upperarm.stl</uri>
           </mesh>
         </geometry>
       </collision>
@@ -216,7 +216,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/kolmogorov/Documents/2ROS/lampo_ws_ros2_rolling/install/ur_description/share/ur_description/meshes/ur10/visual/upperarm.dae</uri>
+            <uri>model://lampo_description/meshes/ur10/visual/upperarm.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -260,7 +260,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/kolmogorov/Documents/2ROS/lampo_ws_ros2_rolling/install/ur_description/share/ur_description/meshes/ur10/collision/forearm.stl</uri>
+            <uri>model://lampo_description/meshes/ur10/collision/forearm.stl</uri>
           </mesh>
         </geometry>
       </collision>
@@ -269,7 +269,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/kolmogorov/Documents/2ROS/lampo_ws_ros2_rolling/install/ur_description/share/ur_description/meshes/ur10/visual/forearm.dae</uri>
+            <uri>model://lampo_description/meshes/ur10/visual/forearm.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -313,7 +313,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/kolmogorov/Documents/2ROS/lampo_ws_ros2_rolling/install/ur_description/share/ur_description/meshes/ur10/collision/wrist1.stl</uri>
+            <uri>model://lampo_description/meshes/ur10/collision/wrist1.stl</uri>
           </mesh>
         </geometry>
       </collision>
@@ -322,7 +322,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/kolmogorov/Documents/2ROS/lampo_ws_ros2_rolling/install/ur_description/share/ur_description/meshes/ur10/visual/wrist1.dae</uri>
+            <uri>model://lampo_description/meshes/ur10/visual/wrist1.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -366,7 +366,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/kolmogorov/Documents/2ROS/lampo_ws_ros2_rolling/install/ur_description/share/ur_description/meshes/ur10/collision/wrist2.stl</uri>
+            <uri>model://lampo_description/meshes/ur10/collision/wrist2.stl</uri>
           </mesh>
         </geometry>
       </collision>
@@ -375,7 +375,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/kolmogorov/Documents/2ROS/lampo_ws_ros2_rolling/install/ur_description/share/ur_description/meshes/ur10/visual/wrist2.dae</uri>
+            <uri>model://lampo_description/meshes/ur10/visual/wrist2.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -419,7 +419,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/kolmogorov/Documents/2ROS/lampo_ws_ros2_rolling/install/ur_description/share/ur_description/meshes/ur10/collision/wrist3.stl</uri>
+            <uri>model://lampo_description/meshes/ur10/collision/wrist3.stl</uri>
           </mesh>
         </geometry>
       </collision>
@@ -428,7 +428,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/kolmogorov/Documents/2ROS/lampo_ws_ros2_rolling/install/ur_description/share/ur_description/meshes/ur10/visual/wrist3.dae</uri>
+            <uri>model://lampo_description/meshes/ur10/visual/wrist3.dae</uri>
           </mesh>
         </geometry>
       </visual>
@@ -436,7 +436,7 @@
     <plugin name='gazebo_ros2_control' filename='libgazebo_ros2_control.so'>
       <robot_param>robot_description</robot_param>
       <robot_namespace>sweepee_1/</robot_namespace>
-      <parameters>/home/kolmogorov/Documents/2ROS/lampo_ws_ros2_rolling/install/lampo_description/share/lampo_description/config/ur_controllers_1.yaml</parameters>
+      <parameters>/home/blanker/omron/src/lampo_description/config/ur_controllers_1.yaml</parameters>
       <robot_param_node>robot_state_publisher</robot_param_node>
     </plugin>
     <static>0</static>
