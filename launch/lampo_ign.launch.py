@@ -109,11 +109,17 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "sim_gazebo",
-            default_value='true',
+            default_value='false',
             description="sim_gazebo",
         )
     )
-
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "sim_ignition",
+            default_value='true',
+            description="sim_ignition",
+        )
+    )
 
     # Initialize Arguments
     ur_type                  = LaunchConfiguration("ur_type")
@@ -128,6 +134,7 @@ def generate_launch_description():
     frame_prefix             = LaunchConfiguration("frame_prefix")
     use_fake_hardware        = LaunchConfiguration("use_fake_hardware")
     sim_gazebo               = LaunchConfiguration("sim_gazebo")
+    sim_ignition             = LaunchConfiguration("sim_ignition")
 
     initial_joint_controllers_1 = PathJoinSubstitution(
         [
@@ -168,6 +175,7 @@ def generate_launch_description():
             " ","simulation_controllers:=",initial_joint_controllers_1,
             " ","use_fake_hardware:=",use_fake_hardware,
             " ","sim_gazebo:=",sim_gazebo,
+            " ","sim_ignition:=",sim_ignition,
         ]
     )
 
@@ -186,6 +194,7 @@ def generate_launch_description():
             " ","simulation_controllers:=",initial_joint_controllers_2,
             " ","use_fake_hardware:=",use_fake_hardware,
             " ","sim_gazebo:=",sim_gazebo,
+            " ","sim_ignition:=",sim_ignition,
         ]
     )
 
@@ -204,6 +213,7 @@ def generate_launch_description():
             " ","simulation_controllers:=",initial_joint_controllers_3,
             " ","use_fake_hardware:=",use_fake_hardware,
             " ","sim_gazebo:=",sim_gazebo,
+            " ","sim_ignition:=",sim_ignition,
         ]
     )
 
@@ -239,35 +249,34 @@ def generate_launch_description():
         parameters=[robot_description_3,frame_prefix_param_3],
     )
 
-    # spawn_sweepee_1 = Node(package='gazebo_ros', executable='spawn_entity.py',namespace="sweepee_1",
-    #                         arguments=['-entity', 'sw1',"-file", os.path.join(get_package_share_directory('lampo_description'),'urdf','sw1.sdf'),
+
+
+    # spawn_sweepee_1 = Node(package='gazebo_ros', executable='spawn_entity.py',name="spawn1",
+    #                         arguments=['-entity', 'sw1',"-topic", "sweepee_1/robot_description",
     #                                    "-robot_namespace","sweepee_1",
-    #                                    "-y"," 2"],
+    #                                    "-y"," 0"],
     #                         output='screen')
 
-    # spawn_sweepee_2 = Node(package='gazebo_ros', executable='spawn_entity.py',namespace="sweepee_2",
-    #                         arguments=['-entity', 'sw2', "-file", os.path.join(get_package_share_directory('lampo_description'),'urdf','sw2.sdf'),
+    # spawn_sweepee_2 = Node(package='gazebo_ros', executable='spawn_entity.py',name="spawn2",
+    #                         arguments=['-entity', 'sw2', "-topic", "sweepee_2/robot_description",
     #                                    "-robot_namespace","sweepee_2",
+    #                                    "-y"," -1"],
+    #                         output='screen')
+
+    # spawn_sweepee_3 = Node(package='gazebo_ros', executable='spawn_entity.py',name="spawn3",
+    #                         arguments=['-entity', 'sw3', "-topic", "sweepee_3/robot_description",
+    #                                    "-robot_namespace","sweepee_3",
     #                                    "-y"," -2"],
     #                         output='screen')
 
-    spawn_sweepee_1 = Node(package='gazebo_ros', executable='spawn_entity.py',name="spawn1",
-                            arguments=['-entity', 'sw1',"-topic", "sweepee_1/robot_description",
-                                       "-robot_namespace","sweepee_1",
-                                       "-y"," 0"],
-                            output='screen')
-
-    spawn_sweepee_2 = Node(package='gazebo_ros', executable='spawn_entity.py',name="spawn2",
-                            arguments=['-entity', 'sw2', "-topic", "sweepee_2/robot_description",
-                                       "-robot_namespace","sweepee_2",
-                                       "-y"," -1"],
-                            output='screen')
-
-    spawn_sweepee_3 = Node(package='gazebo_ros', executable='spawn_entity.py',name="spawn3",
-                            arguments=['-entity', 'sw3', "-topic", "sweepee_3/robot_description",
-                                       "-robot_namespace","sweepee_3",
-                                       "-y"," -2"],
-                            output='screen')
+    spawn_sweepee_1 = Node(
+        package='ros_gz_sim',
+        executable='create',
+        output='screen',
+        arguments=['-topic', "sweepee_1/robot_description",
+                   '-name', 'sweepee1',
+                   '-allow_renaming', 'true'],
+    )
 
 ########## CONTROLLERS
 
@@ -320,58 +329,22 @@ def generate_launch_description():
     )
 
 
-########## NAVIGATION
-    # map_yaml_file = os.path.join(
-    #         get_package_share_directory('lampo_description'),
-    #         'map',
-    #         'map.yaml')
-
-    # param_map = {'yaml_filename': map_yaml_file}
-
-    # map_server = Node(
-    #         package='nav2_map_server',
-    #         executable='map_server',
-    #         name='map_server',
-    #         output='screen',
-    #         parameters=[param_map])
-
-
-    # nav_sw1_params = os.path.join(
-    #         get_package_share_directory('lampo_description'),
-    #         'config',
-    #         "nav_params.yaml")
-
-    # nav_sw1 = GroupAction(
-    #     actions=[
-    #                 IncludeLaunchDescription(
-    #                 PythonLaunchDescriptionSource(os.path.join(get_package_share_directory('nav2_bringup'),"launch", 'navigation_launch.py')),
-    #                 launch_arguments={'namespace': "sweepee_1",
-    #                                 'use_namespace': "true",
-    #                                 'use_sim_time': "true",
-    #                                 'autostart': "true",
-    #                                 'params_file': nav_sw1_params,
-    #                                 'use_lifecycle_mgr': 'false',
-    #                                 'map_subscribe_transient_local': 'true'}.items())])
-
 
 
 ########## VISUALIZATION
 
-    
+    world_path = os.path.join(get_package_share_directory('lampo_description'),'worlds/warehouse.sdf')
 
     gazebo_server = GroupAction(
         actions=[
             IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(
-                    os.path.join(
-                        get_package_share_directory('gazebo_ros'),
-                        'launch/gazebo.launch.py')),
-                        launch_arguments={'world': os.path.join(get_package_share_directory('lampo_description'),'worlds/world.world'),
-                                          'verbose' : 'true' ,
-                                          'pause' : 'false'}.items(),
-            ),
-        ]
-    )
+            PythonLaunchDescriptionSource(
+                [os.path.join(get_package_share_directory('ros_gz_sim'),
+                              'launch', 'gz_sim.launch.py')]),
+            launch_arguments=[('gz_args', [' -r -v 4 ' + world_path ])]),
+            ]
+            )
+        
 
     rviz_config_file = PathJoinSubstitution(
         [FindPackageShare("lampo_description"), "rviz", "config.rviz"]
@@ -413,29 +386,33 @@ def generate_launch_description():
         gazebo_server,
         # rviz_node,
         TimerAction(
-            period=1.0,
-            actions=[spawn_sweepee_1,robot_state_publisher_node_1]#control_node_1],
+            period=2.0,
+            actions=[robot_state_publisher_node_1]#control_node_1],
         ),
+        # TimerAction(
+        #     period=20.0,
+        #     actions=[spawn_sweepee_1,robot_state_publisher_node_1]#control_node_1],
+        # ),
         # TimerAction(
         #     period=2.0,
         #     actions=[joint_state_broadcaster_spawner_1,initial_joint_controller_spawner_started_1]
         # ),
-        TimerAction(
-            period=3.0,
-            actions=[spawn_sweepee_2,robot_state_publisher_node_2]#control_node_2],
-        ),
-        TimerAction(
-            period=5.0,
-            actions=[spawn_sweepee_3,robot_state_publisher_node_3]#control_node_2],
-        ),
+        # TimerAction(
+        #     period=3.0,
+        #     actions=[spawn_sweepee_2,robot_state_publisher_node_2]#control_node_2],
+        # ),
+        # TimerAction(
+        #     period=5.0,
+        #     actions=[spawn_sweepee_3,robot_state_publisher_node_3]#control_node_2],
+        # ),
         # TimerAction(
         #     period=18.0,
         #     actions=[joint_state_broadcaster_spawner_2,initial_joint_controller_spawner_started_2]
         # ),
-        TimerAction(
-            period=7.0,
-            actions=[tf_sw1,tf_sw2,tf_sw3],#rviz_node
-        ),
+        # TimerAction(
+        #     period=7.0,
+        #     actions=[tf_sw1,tf_sw2,tf_sw3],#rviz_node
+        # ),
         # TimerAction(
         #     period=14.0,
         #     actions=[map_server,nav_sw1],

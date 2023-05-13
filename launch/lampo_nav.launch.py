@@ -82,10 +82,10 @@ def generate_launch_description():
                 period=2.0,
                 actions=[nav_sw1],
                 ),
-                TimerAction(
-                period=6.0,
-                actions=[nav_sw2],
-                ),
+                # TimerAction(
+                # period=6.0,
+                # actions=[nav_sw2],
+                # ),
                 ]
 
     return LaunchDescription(nodes_to_start)
