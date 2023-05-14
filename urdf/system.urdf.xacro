@@ -79,7 +79,7 @@
   </xacro:if>
 
    <!-- arm -->
-  <!-- <xacro:ur_robot
+  <xacro:ur_robot
     name="$(arg name)"
     prefix="$(arg prefix)"
     parent="$(arg prefix)base_footprint"
@@ -112,22 +112,31 @@
     input_recipe_filename="$(arg input_recipe_filename)"
     >
     <origin xyz="0 0 0.4" rpy="0 0 0" />          
-  </xacro:ur_robot> -->
+  </xacro:ur_robot>
 
 
 
   <xacro:if value="$(arg sim_ignition)">
-    <!-- <gazebo reference="world">
+    <gazebo>
+        <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+          <robot_param>robot_description</robot_param>
+          <robot_param_node>robot_state_publisher</robot_param_node>
+          <!-- <robot_namespace>$(arg prefix)</robot_namespace> -->
+          <parameters>$(arg simulation_controllers)</parameters>
+          <ros>
+            <namespace>$(arg prefix_rc)</namespace>
+          </ros>
+        </plugin>
     </gazebo>
-    <gazebo> -->
-      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+    <!-- <gazebo> 
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin"> 
         <parameters>$(arg simulation_controllers)</parameters>
         <controller_manager_node_name>$(arg prefix)controller_manager</controller_manager_node_name>
         <robot_param>robot_description</robot_param>
         <robot_namespace>$(arg prefix)</robot_namespace>
         <robot_param_node>robot_state_publisher</robot_param_node>
       </plugin>
-    </gazebo>
+    </gazebo> -->
   </xacro:if>
 
 

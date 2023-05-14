@@ -385,14 +385,14 @@ def generate_launch_description():
     nodes_to_start = [
         gazebo_server,
         # rviz_node,
-        TimerAction(
-            period=2.0,
-            actions=[robot_state_publisher_node_1]#control_node_1],
-        ),
         # TimerAction(
-        #     period=20.0,
-        #     actions=[spawn_sweepee_1,robot_state_publisher_node_1]#control_node_1],
+        #     period=2.0,
+        #     actions=[robot_state_publisher_node_1]#control_node_1],
         # ),
+        TimerAction(
+            period=10.0,
+            actions=[spawn_sweepee_1,robot_state_publisher_node_1]#control_node_1],
+        ),
         # TimerAction(
         #     period=2.0,
         #     actions=[joint_state_broadcaster_spawner_1,initial_joint_controller_spawner_started_1]

@@ -9,6 +9,8 @@
       joint_trajectory_controller:
         type: joint_trajectory_controller/JointTrajectoryController
 
+      imm:
+        type: imm_controller/ImmController
 
   joint_trajectory_controller:
     ros__parameters:
@@ -36,5 +38,22 @@
         wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
         wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
         wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
-
+        
+  imm:
+    ros__parameters:
+      joints:
+        - sweepee_1/shoulder_pan_joint
+        - sweepee_1/shoulder_lift_joint
+        - sweepee_1/elbow_joint
+        - sweepee_1/wrist_1_joint
+        - sweepee_1/wrist_2_joint
+        - sweepee_1/wrist_3_joint
+      interface_name: position
+      robot_chain_root: sweepee_1/base_link
+      robot_chain_tip:  sweepee_1/tool0
+      robot_description_topic: /sweepee_1/robot_description
+      amr_base_link:  sweepee_1/base_footprint
+      cmd_vel_topic: /sweepee_1/cmd_vel
+      only_robot: true
+      omni: true
 
