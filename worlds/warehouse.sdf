@@ -1,9 +1,14 @@
 <sdf version='1.10'>
   <world name='world_demo'>
-    <physics name='1ms' type='ignored'>
+    <!-- <physics name='1ms' type='ignored'>
       <max_step_size>0.01</max_step_size>
       <real_time_factor>1</real_time_factor>
       <real_time_update_rate>1000</real_time_update_rate>
+    </physics> -->
+    <physics type='ode'>
+      <max_step_size>0.01</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <!-- <max_contacts>10</max_contacts> -->
     </physics>
     <plugin name='gz::sim::systems::Physics' filename='libgz-sim-physics-system.so'/>
     <plugin name='gz::sim::systems::UserCommands' filename='libgz-sim-user-commands-system.so'/>
@@ -33,7 +38,10 @@
           </geometry>
           <surface>
             <friction>
-              <ode/>
+              <ode>
+                <mu>0.7</mu>
+                <mu2>0.4</mu2>
+              </ode>
             </friction>
             <bounce/>
             <contact/>

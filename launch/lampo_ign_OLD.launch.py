@@ -255,12 +255,12 @@ def generate_launch_description():
         parameters=[robot_description_3,frame_prefix_param_3],
     )
 
-    sweepee_1_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/mm.sdf')
+
     spawn_sweepee_1 = Node(
         package='ros_gz_sim',
         executable='create',
         output='screen',
-        arguments=['-file', sweepee_1_path,
+        arguments=['-topic', "sweepee_1/robot_description",
                    '-name', 'sweepee_1',
                    '-allow_renaming', 'false',
                    '-x', '-0.5',

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<robot name="eureca" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="eureca" xmlns:xacro="http://www.ros.org/wiki/xacro" xmlns:gz="http://gazebosim.org/schema">
 
   <!-- <xacro:include filename="$(find lampo_description)/urdf/sweepee/camera.urdf.xacro" /> -->
 
@@ -11,22 +11,15 @@
   <xacro:property name="base_x_size" value="1.02" />
   <xacro:property name="base_y_size" value="0.55" />
   <xacro:property name="base_z_size" value="0.35" />
+  
 
   <xacro:macro name="sweepee" params="prefix *origin">
   
     <!-- Base footprint is on the ground under the robot -->
     <link name="${prefix}base_footprint">
-      <inertial>
-          <mass value="10" />
-          <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
-      </inertial>
-      <collision>
-        <origin xyz="0 0 0.005" rpy="0 0 0" />
-        <geometry>
-          <box size="${base_x_size} ${base_y_size} 0.01"/>
-        </geometry>
-      </collision>
     </link>  
+
+
     <!-- Base link is the center of the robot's bottom plate -->
     <link name="${prefix}base_link_sweepee">
       <visual>
@@ -39,16 +32,22 @@
         </material>
       </visual>
       <inertial>
-          <mass value="40" />
-          <inertia ixx="0.48454" ixy="0.01" ixz="0.01" iyy="0.02861" iyz="0.01" izz="0.10178" />
+          <origin xyz="0 0 0.2" rpy="0 0 0" />
+          <mass value="150" />
+          <inertia ixx="2.0" ixy="0.0" ixz="0.0" iyy="3.7" iyz="0.0" izz="6.0" />
       </inertial>
+      <collision>
+        <origin xyz="0 0 0.2" rpy="0 0 0" />
+        <geometry>
+          <box size="0.3 ${base_y_size} 0.05"/>
+        </geometry>
+      </collision>
     </link>
 
     <joint name="${prefix}base_footprint_joint" type="fixed">
       <xacro:insert_block name="origin"/> 
       <parent link="${prefix}base_footprint" />
       <child link="${prefix}base_link_sweepee" />
-      <dynamics damping="0.7"/>
     </joint>
 
     <link name="${prefix}front_laser" />
@@ -65,80 +64,136 @@
       <child link="${prefix}rear_laser" />
     </joint>
 
-  <!-- <gazebo reference="${prefix}rear_laser">
-      <sensor type="ray" name="$(arg prefix)rear_laser">
-          <update_rate>10</update_rate>
-          <ray>
-              <scan display="false">
-                  <horizontal>
-                      <samples>750</samples>
-                      <resolution>1</resolution>
-                      <min_angle>-${M_PI /2}</min_angle>
-                      <max_angle> ${M_PI /2}</max_angle>
-                  </horizontal>
-              </scan>
-              <range>
-                  <min>0.25</min>
-                  <max>59.0</max>
-              </range>
-          </ray>
-          <plugin filename="libgazebo_ros_ray_sensor.so" name="rear_laser_plugin">
-              <noise>
-                  <type>gaussian</type>
-                  <mean>0.0</mean>
-                  <stddev>0.01</stddev>
-              </noise>
-              <ros>
-                <namespace>${prefix}</namespace>
-                <argument>~out:=${prefix}rear_scan</argument>        
-              </ros>
-              <alwaysOn>true</alwaysOn>
-              <updateRate>15</updateRate>
-              <frame_name>${prefix}rear_laser</frame_name>
-              <output_type>sensor_msgs/LaserScan</output_type>
-          </plugin>
-      </sensor>
-  </gazebo>  -->
+      <link name='${prefix}front_left_wheel'>
+        <inertial>
+          <mass value="1"/>
+          <inertia ixx="0.145"  ixy="0"  ixz="0" iyy="0.145" iyz="0" izz="0.125" />
+        </inertial>
+        <visual>
+          <geometry>
+            <sphere length="0.05" radius="0.1"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <sphere length="0.05" radius="0.1"/>
+          </geometry>
+        </collision>
+      </link>
 
-  <!-- <gazebo reference="${prefix}front_laser">
-      <sensor type="ray" name="${prefix}front_laser">
-          <update_rate>10</update_rate>
-          <ray>
-              <scan display="false">
-                  <horizontal>
-                      <samples>750</samples>
-                      <resolution>1</resolution>
-                      <min_angle>-${M_PI /2}</min_angle>
-                      <max_angle> ${M_PI /2}</max_angle>
-                  </horizontal>
-              </scan>
-              <range>
-                  <min>0.25</min>
-                  <max>59.0</max>
-              </range>
-          </ray>
-          <plugin filename="libgazebo_ros_ray_sensor.so" name="front_laser_plugin">
-              <noise>
-                  <type>gaussian</type>
-                  <mean>0.0</mean>
-                  <stddev>0.01</stddev>
-              </noise>
-              <ros>
-                <namespace>${prefix}</namespace>
-                <argument>~out:=${prefix}front_scan</argument>           
-              </ros>
-              <alwaysOn>true</alwaysOn>
-              <updateRate>15</updateRate>
-              <frame_name>${prefix}front_laser</frame_name>
-              <output_type>sensor_msgs/LaserScan</output_type>
-          </plugin>
-      </sensor>
-  </gazebo> -->
+      <link name='${prefix}rear_left_wheel'>
+        <inertial>
+          <mass value="1"/>
+          <inertia ixx="0.145"  ixy="0"  ixz="0" iyy="0.145" iyz="0" izz="0.125" />
+        </inertial>
+        <visual>
+          <geometry>
+            <sphere length="0.05" radius="0.1"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <sphere length="0.05" radius="0.1"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <link name='${prefix}front_right_wheel'>
+        <inertial>
+          <mass value="1"/>
+          <inertia ixx="0.145"  ixy="0"  ixz="0" iyy="0.145" iyz="0" izz="0.125" />
+        </inertial>
+        <visual>
+          <geometry>
+            <sphere length="0.05" radius="0.1"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <sphere length="0.05" radius="0.1"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <link name='${prefix}rear_right_wheel'>
+        <inertial>
+          <mass value="1"/>
+          <inertia ixx="0.145"  ixy="0"  ixz="0" iyy="0.145" iyz="0" izz="0.125" />
+        </inertial>
+        <visual>
+          <geometry>
+            <sphere length="0.05" radius="0.1"/>
+          </geometry>
+        </visual>
+        <collision>
+          <geometry>
+            <sphere length="0.05" radius="0.1"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <gazebo reference="${prefix}front_left_wheel">
+        <mu1>1.0</mu1>
+        <mu2>0.0</mu2>
+        <fdir1 gz:expressed_in='${prefix}base_footprint'>1 -1 0</fdir1>
+      </gazebo>
+
+      <gazebo reference="${prefix}rear_left_wheel">
+        <mu1>1.0</mu1>
+        <mu2>0.0</mu2>
+        <fdir1 gz:expressed_in='${prefix}base_footprint'>1 1 0</fdir1>
+      </gazebo>
+
+      <gazebo reference="${prefix}front_right_wheel">
+        <mu1>1.0</mu1>
+        <mu2>0.0</mu2>
+        <fdir1 gz:expressed_in='${prefix}base_footprint'>1 1 0</fdir1>
+      </gazebo>
+
+        <gazebo reference="${prefix}rear_right_wheel">
+        <mu1>1.0</mu1>
+        <mu2>0.0</mu2>
+        <fdir1 gz:expressed_in='${prefix}base_footprint'>1 -1 0</fdir1>
+      </gazebo>
+
+
+      <joint name='${prefix}front_left_wheel_joint' type='revolute'>
+        <origin xyz="0.3 0.25 0.1" rpy="-1.5707 0 0"/>
+        <parent link="${prefix}base_link_sweepee"/>
+        <child link="${prefix}front_left_wheel"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="5.1"/>
+      </joint>
+
+      <joint name='${prefix}front_right_wheel_joint' type='revolute'>
+        <origin xyz="0.3 -0.25 0.1" rpy="-1.5707 0 0"/>
+        <parent link="${prefix}base_link_sweepee"/>
+        <child link="${prefix}front_right_wheel"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="5.1"/>
+      </joint>
+
+      <joint name='${prefix}rear_left_wheel_joint' type='revolute'>
+        <origin xyz="-0.3 0.25 0.1" rpy="-1.5707 0 0"/>
+        <parent link="${prefix}base_link_sweepee"/>
+        <child link="${prefix}rear_left_wheel"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="5.1"/>
+      </joint>
+
+      <joint name='${prefix}rear_right_wheel_joint' type='revolute'>
+        <origin xyz="-0.3 -0.25 0.1" rpy="-1.5707 0 0"/>
+        <parent link="${prefix}base_link_sweepee"/>
+        <child link="${prefix}rear_right_wheel"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="5.1"/>
+      </joint>
+
 
   <gazebo reference="${prefix}front_laser">
     <sensor name='gpu_lidar' type='gpu_lidar'>"
         <pose relative_to='${prefix}front_laser'>0 0 0 0 0 0</pose>
-        <topic>lidar</topic>
+        <topic>${prefix}lidar</topic>
         <update_rate>10</update_rate>
         <ray>
             <scan>
@@ -164,6 +219,25 @@
         <always_on>1</always_on>
         <visualize>true</visualize>
     </sensor>
+  </gazebo>
+
+  <gazebo>
+    <plugin
+      filename="gz-sim-mecanum-drive-system"
+      name="gz::sim::systems::MecanumDrive">
+      <front_left_joint>${prefix}front_left_wheel_joint</front_left_joint>
+      <front_right_joint>${prefix}front_right_wheel_joint</front_right_joint>
+      <back_left_joint>${prefix}rear_left_wheel_joint</back_left_joint>
+      <back_right_joint>${prefix}rear_right_wheel_joint</back_right_joint>
+      <wheel_separation>0.5</wheel_separation>
+      <wheelbase>0.7</wheelbase>
+      <wheel_radius>0.1</wheel_radius>
+      <min_acceleration>-5</min_acceleration>
+      <max_acceleration>5</max_acceleration>
+      <topic>${prefix}cmd_vel</topic>
+      <frame_id>${prefix}base_link_sweepee</frame_id>
+
+    </plugin>
   </gazebo>
 
   </xacro:macro>

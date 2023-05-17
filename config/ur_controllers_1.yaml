@@ -1,7 +1,7 @@
 /sweepee_1:
   controller_manager:
     ros__parameters:
-      update_rate: 500  # Hz
+      update_rate: 50  # Hz
 
       joint_state_broadcaster:
         type: joint_state_broadcaster/JointStateBroadcaster
@@ -41,6 +41,13 @@
         
   imm:
     ros__parameters:
+      command_joints:
+        - sweepee_1/shoulder_pan_joint
+        - sweepee_1/shoulder_lift_joint
+        - sweepee_1/elbow_joint
+        - sweepee_1/wrist_1_joint
+        - sweepee_1/wrist_2_joint
+        - sweepee_1/wrist_3_joint
       joints:
         - sweepee_1/shoulder_pan_joint
         - sweepee_1/shoulder_lift_joint
@@ -48,10 +55,13 @@
         - sweepee_1/wrist_1_joint
         - sweepee_1/wrist_2_joint
         - sweepee_1/wrist_3_joint
-      interface_name: position
+      control_interface:
+      - position
+      state_interface:
+      - position
+      - velocity
       robot_chain_root: sweepee_1/base_link
       robot_chain_tip:  sweepee_1/tool0
-      robot_description_topic: /sweepee_1/robot_description
       amr_base_link:  sweepee_1/base_footprint
       cmd_vel_topic: /sweepee_1/cmd_vel
       only_robot: true

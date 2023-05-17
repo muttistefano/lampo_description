@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<robot name="eureca" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="mobile_manipulator" xmlns:xacro="http://ros.org/wiki/xacro" xmlns:gz="http://gazebosim.org/schema">>
 
   <xacro:include filename="$(find lampo_description)/urdf/sweepee/sweepee.gazebo.xacro" />
   <xacro:include filename="$(find lampo_description)/urdf/sweepee/sweepee.xacro" />
@@ -128,15 +128,6 @@
           </ros>
         </plugin>
     </gazebo>
-    <!-- <gazebo> 
-      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin"> 
-        <parameters>$(arg simulation_controllers)</parameters>
-        <controller_manager_node_name>$(arg prefix)controller_manager</controller_manager_node_name>
-        <robot_param>robot_description</robot_param>
-        <robot_namespace>$(arg prefix)</robot_namespace>
-        <robot_param_node>robot_state_publisher</robot_param_node>
-      </plugin>
-    </gazebo> -->
   </xacro:if>
 
 
