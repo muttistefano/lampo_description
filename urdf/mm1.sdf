@@ -715,6 +715,7 @@
       <plugin name='gz_ros2_control::GazeboSimROS2ControlPlugin' filename='libgz_ros2_control-system.so'>
         <robot_param>robot_description</robot_param>
         <robot_param_node>robot_state_publisher</robot_param_node>
+        <controller_manager_prefix_node_name>sweepee_1</controller_manager_prefix_node_name>
         <parameters>/home/gino/ROS/lampo_ws_ros2_rolling/install/lampo_description/share/lampo_description/config/ur_controllers_1.yaml</parameters>
         <ros>
           <namespace>sweepee_1</namespace>

@@ -1,0 +1,1325 @@
+<sdf version='1.10'>
+  <world name='world_demo'>
+    <!-- <physics name='1ms' type='ignored'>
+      <max_step_size>0.01</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics> -->
+    <physics type='ode'>
+      <max_step_size>0.01</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <!-- <max_contacts>10</max_contacts> -->
+    </physics>
+    <plugin name='gz::sim::systems::Physics' filename='libgz-sim-physics-system.so'/>
+    <plugin name='gz::sim::systems::UserCommands' filename='libgz-sim-user-commands-system.so'/>
+    <plugin name='gz::sim::systems::SceneBroadcaster' filename='libgz-sim-scene-broadcaster-system.so'/>
+    <plugin name='gz::sim::systems::Imu' filename='libgz-sim-imu-system'/>
+    <plugin name='gz::sim::systems::Sensors' filename='libgz-sim-sensors-system'>
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <scene>
+      <ambient>1 1 1 1</ambient>
+      <background>0.300000012 0.699999988 0.899999976 1</background>
+      <shadows>false</shadows>
+      <grid>true</grid>
+    </scene>
+    <gravity>0 0 -9.8000000000000007</gravity>
+    <magnetic_field>6.0000000000000002e-06 2.3e-05 -4.1999999999999998e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <model name='ground_plane'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>1 1</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>0.7</mu>
+                <mu2>0.4</mu2>
+              </ode>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0 0 0 0 0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='Depot'>
+      <static>false</static>
+      <link name='main'>
+        <collision name='collision'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <visual name='ROOF_visual'>
+          <geometry>
+            <mesh>
+              <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <submesh>
+                <name>ROOF</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/ROOF_Albedo.png</albedo_map>
+                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/ROOF_Normal.png</normal_map>
+                <metalness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/ROOF_Metalness.png</metalness_map>
+                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/ROOF_Roughness.png</roughness_map>
+                <emissive_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/ROOF_Emissive.png</emissive_map>
+                <light_map uv_set='1'>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/DepotLightmap.png</light_map>
+              </metal>
+            </pbr>
+            <script>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/scripts/</uri>
+              <uri>materials/textures/</uri>
+              <name>UrbanTile/ROOF_Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='WALLS_visual'>
+          <geometry>
+            <mesh>
+              <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <submesh>
+                <name>WALLS</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/WALLS_Albedo.png</albedo_map>
+                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/WALLS_Normal.png</normal_map>
+                <metalness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/WALLS_Metalness.png</metalness_map>
+                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/WALLS_Roughness.png</roughness_map>
+                <light_map uv_set='1'>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/DepotLightmap.png</light_map>
+              </metal>
+            </pbr>
+            <script>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/scripts/</uri>
+              <uri>materials/textures/</uri>
+              <name>UrbanTile/WALLS_Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='PILLERS_visual'>
+          <geometry>
+            <mesh>
+              <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <submesh>
+                <name>PILLERS</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/PILLERS_Albedo.png</albedo_map>
+                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/PILLERS_Normal.png</normal_map>
+                <metalness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/PILLERS_Metalness.png</metalness_map>
+                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/PILLERS_Roughness.png</roughness_map>
+                <light_map uv_set='1'>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/DepotLightmap.png</light_map>
+              </metal>
+            </pbr>
+            <script>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/scripts/</uri>
+              <uri>materials/textures/</uri>
+              <name>UrbanTile/PILLERS_Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='FANS_visual'>
+          <geometry>
+            <mesh>
+              <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <submesh>
+                <name>FANS</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FANS_Albedo.png</albedo_map>
+                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FANS_Normal.png</normal_map>
+                <metalness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FANS_Metalness.png</metalness_map>
+                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FANS_Roughness.png</roughness_map>
+                <light_map uv_set='1'>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/DepotLightmap.png</light_map>
+              </metal>
+            </pbr>
+            <script>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/scripts/</uri>
+              <uri>materials/textures/</uri>
+              <name>UrbanTile/FAN_Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='WINDOW_visual'>
+          <geometry>
+            <mesh>
+              <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <submesh>
+                <name>WINDOW</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/Window_WINDOW_BaseColor.png</albedo_map>
+                <metalness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/Window_WINDOW_Metallic.png</metalness_map>
+                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/Window_WINDOW_Roughness.png</roughness_map>
+              </metal>
+            </pbr>
+            <script>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/scripts/</uri>
+              <uri>materials/textures/</uri>
+              <name>UrbanTile/WINDOW_Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='INTERCOM_visual'>
+          <geometry>
+            <mesh>
+              <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <submesh>
+                <name>INTERCOM</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/INTERCOM_Albedo.png</albedo_map>
+                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/INTERCOM_Normal.png</normal_map>
+                <metalness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/INTERCOM_Metalness.png</metalness_map>
+                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/INTERCOM_Roughness.png</roughness_map>
+                <emissive_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/INTERCOM_Emissive.png</emissive_map>
+                <light_map uv_set='1'>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/DepotLightmap.png</light_map>
+              </metal>
+            </pbr>
+            <script>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/scripts/</uri>
+              <uri>materials/textures/</uri>
+              <name>UrbanTile/INTERCOM_Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='FireAlarm_visual'>
+          <geometry>
+            <mesh>
+              <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <submesh>
+                <name>FireAlarm</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FireAlarm_Albedo.png</albedo_map>
+                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FireAlarm_Normal.png</normal_map>
+                <metalness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FireAlarm_Metalness.png</metalness_map>
+                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FireAlarm_Roughness.png</roughness_map>
+                <light_map uv_set='1'>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/DepotLightmap.png</light_map>
+              </metal>
+            </pbr>
+            <script>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/scripts/</uri>
+              <uri>materials/textures/</uri>
+              <name>UrbanTile/FireAlarm_Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='FireAlarmPole_visual'>
+          <geometry>
+            <mesh>
+              <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <submesh>
+                <name>FireAlarmPole</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FireAlarmPole_Albedo.png</albedo_map>
+                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FireAlarmPole_Normal.png</normal_map>
+                <metalness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FireAlarmPole_Metalness.png</metalness_map>
+                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FireAlarmPole_Roughness.png</roughness_map>
+                <light_map uv_set='1'>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/DepotLightmap.png</light_map>
+              </metal>
+            </pbr>
+            <script>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/scripts/</uri>
+              <uri>materials/textures/</uri>
+              <name>UrbanTile/FireAlarmPole</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='Pipes_visual'>
+          <geometry>
+            <mesh>
+              <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <submesh>
+                <name>Pipes</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/Pipes_Albedo.png</albedo_map>
+                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/Pipes_Normal.png</normal_map>
+                <metalness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/Pipes_Metalness.png</metalness_map>
+                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/Pipes_Roughness.png</roughness_map>
+                <light_map uv_set='1'>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/DepotLightmap.png</light_map>
+              </metal>
+            </pbr>
+            <script>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/scripts/</uri>
+              <uri>materials/textures/</uri>
+              <name>UrbanTile/Pipes_Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='STAIRS_visual'>
+          <geometry>
+            <mesh>
+              <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <submesh>
+                <name>STAIRS</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/STAIRS_Albedo.png</albedo_map>
+                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/STAIRS_Normal.png</normal_map>
+                <metalness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/STAIRS_Metalness.png</metalness_map>
+                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/STAIRS_Roughness.png</roughness_map>
+                <light_map uv_set='1'>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/DepotLightmap.png</light_map>
+              </metal>
+            </pbr>
+            <script>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/scripts/</uri>
+              <uri>materials/textures/</uri>
+              <name>UrbanTile/STAIRS_Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='BOXSET_visual'>
+          <geometry>
+            <mesh>
+              <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <submesh>
+                <name>BOXSET</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/BOXSET_Albedo.png</albedo_map>
+                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/BOXSET_Normal.png</normal_map>
+                <metalness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/BOXSET_Metalness.png</metalness_map>
+                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/BOXSET_Roughness.png</roughness_map>
+                <emissive_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/BOXSET_Emissive.png</emissive_map>
+                <light_map uv_set='1'>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/DepotLightmap.png</light_map>
+              </metal>
+            </pbr>
+            <script>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/scripts/</uri>
+              <uri>materials/textures/</uri>
+              <name>UrbanTile/BOXSET_Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='FLOOR_visual'>
+          <geometry>
+            <mesh>
+              <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <submesh>
+                <name>FLOOR</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FLOOR_Albedo.png</albedo_map>
+                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FLOOR_Normal.png</normal_map>
+                <metalness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FLOOR_Metalness.png</metalness_map>
+                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FLOOR_Roughness.png</roughness_map>
+                <light_map uv_set='1'>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/DepotLightmap.png</light_map>
+              </metal>
+            </pbr>
+            <script>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/scripts/</uri>
+              <uri>materials/textures/</uri>
+              <name>UrbanTile/FLOOR_Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='FanBack_visual'>
+          <geometry>
+            <mesh>
+              <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <submesh>
+                <name>FanBack</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FanBack_FanBack_BaseColor.png</albedo_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <visual name='crates'>
+          <geometry>
+            <mesh>
+              <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Crates.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/Crates_Crates_BaseColor.png</albedo_map>
+                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/Crates_Crates_Normal.png</normal_map>
+                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/Crates_Crates_Roughness.png</roughness_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <link name='Fan1'>
+        <pose>-5.0153999999999996 -0.29520000000000002 6.1200000000000001 0 0 3.1031085492408312</pose>
+        <visual name='visual'>
+          <pose>5.0153999999999996 0.29520000000000002 -6.1200000000000001 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <submesh>
+                <name>FAN1</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FANS_Albedo.png</albedo_map>
+                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FANS_Normal.png</normal_map>
+                <metalness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FANS_Metalness.png</metalness_map>
+                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FANS_Roughness.png</roughness_map>
+                <light_map uv_set='1'>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/DepotLightmap.png</light_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <light name='fan_light' type='point'>
+          <pose>0 0 0 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <intensity>1</intensity>
+          <direction>0 0 -1</direction>
+          <diffuse>1 1 1 1</diffuse>
+          <specular>0.300000012 0.300000012 0.300000012 1</specular>
+          <attenuation>
+            <range>50</range>
+            <linear>0</linear>
+            <constant>0</constant>
+            <quadratic>0</quadratic>
+          </attenuation>
+          <spot>
+            <inner_angle>0</inner_angle>
+            <outer_angle>0</outer_angle>
+            <falloff>0</falloff>
+          </spot>
+        </light>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <link name='Fan2'>
+        <pose>5.0153999999999996 -0.29520000000000002 6.1200000000000001 0 0 -0.076968208697923632</pose>
+        <visual name='visual'>
+          <pose>5.0153999999999996 0.29520000000000002 -6.1200000000000001 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
+              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <submesh>
+                <name>FAN1</name>
+                <center>false</center>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FANS_Albedo.png</albedo_map>
+                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FANS_Normal.png</normal_map>
+                <metalness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FANS_Metalness.png</metalness_map>
+                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FANS_Roughness.png</roughness_map>
+                <light_map uv_set='1'>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/DepotLightmap.png</light_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+        <light name='fan_light' type='point'>
+          <pose>0 0 0 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <intensity>1</intensity>
+          <direction>0 0 -1</direction>
+          <diffuse>1 1 1 1</diffuse>
+          <specular>0.300000012 0.300000012 0.300000012 1</specular>
+          <attenuation>
+            <range>50</range>
+            <linear>0</linear>
+            <constant>0</constant>
+            <quadratic>0</quadratic>
+          </attenuation>
+          <spot>
+            <inner_angle>0</inner_angle>
+            <outer_angle>0</outer_angle>
+            <falloff>0</falloff>
+          </spot>
+        </light>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <joint name='world_joint' type='fixed'>
+        <parent>world</parent>
+        <child>main</child>
+        <pose>0 0 0 0 0 0</pose>
+      </joint>
+      <joint name='fan1_joint' type='revolute'>
+        <parent>main</parent>
+        <child>Fan1</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-inf</lower>
+            <upper>inf</upper>
+            <effort>inf</effort>
+            <velocity>inf</velocity>
+            <stiffness>100000000</stiffness>
+            <dissipation>1</dissipation>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+            <damping>0</damping>
+            <friction>0</friction>
+          </dynamics>
+        </axis>
+        <pose>0 0 0 0 0 0</pose>
+      </joint>
+      <joint name='fan2_joint' type='revolute'>
+        <parent>main</parent>
+        <child>Fan2</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-inf</lower>
+            <upper>inf</upper>
+            <effort>inf</effort>
+            <velocity>inf</velocity>
+            <stiffness>100000000</stiffness>
+            <dissipation>1</dissipation>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+            <damping>0</damping>
+            <friction>0</friction>
+          </dynamics>
+        </axis>
+        <pose>0 0 0 0 0 0</pose>
+      </joint>
+      <plugin name='gz::sim::systems::JointController' filename='libgz-sim-joint-controller-system'>
+        <joint_name>fan1_joint</joint_name>
+        <initial_velocity>1.0</initial_velocity>
+      </plugin>
+      <plugin name='gz::sim::systems::JointController' filename='libgz-sim-joint-controller-system'>
+        <joint_name>fan2_joint</joint_name>
+        <initial_velocity>2.0</initial_velocity>
+      </plugin>
+      <pose>7.1900899999999996 1.09982 0 0 0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='depot_collision'>
+      <static>true</static>
+      <pose>7.1900899999999996 1.09982 0 0 0 0</pose>
+      <link name='collision_link'>
+        <pose>0 0 0 0 0 0</pose>
+        <collision name='wall1'>
+          <pose>0 -7.6128999999999998 4.5 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>30.167000000000002 0.080000000000000002 9</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='wall2'>
+          <pose>0 7.2874999999999996 4.5 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>30.167000000000002 0.080000000000000002 9</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='wall3'>
+          <pose>-15 0 4.5 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.080000000000000002 15.359999999999999 9</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='wall4'>
+          <pose>15 0 4.5 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.080000000000000002 15.359999999999999 9</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='boxes1'>
+          <pose>0.22267999999999999 -4.7267999999999999 0.68506 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.288 1.4219999999999999 1.288</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='boxes2'>
+          <pose>3.1726999999999999 -4.7267999999999999 0.68506 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.288 1.4219999999999999 1.288</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='boxes3'>
+          <pose>5.95268 -4.7267999999999999 0.68506 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.288 1.4219999999999999 1.288</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='boxes4'>
+          <pose>8.5588700000000006 -4.7267999999999999 0.68506 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.288 1.4219999999999999 1.288</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='boxes5'>
+          <pose>11.326000000000001 -4.7267999999999999 0.68506 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.288 1.4219999999999999 1.288</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='boxes6'>
+          <pose>0.22267999999999999 -2.3744800000000001 0.68506 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.288 1.4219999999999999 1.288</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='boxes7'>
+          <pose>3.1726999999999999 -2.3744800000000001 0.68506 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.288 1.4219999999999999 1.288</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='boxes8'>
+          <pose>5.95268 -2.3744800000000001 0.68506 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.288 1.4219999999999999 1.288</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='boxes9'>
+          <pose>8.5588700000000006 -2.3744800000000001 0.68506 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.288 1.4219999999999999 1.288</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='boxes10'>
+          <pose>11.326000000000001 -2.3744800000000001 0.68506 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.288 1.4219999999999999 1.288</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='boxes11'>
+          <pose>-1.2267999999999999 4.1557000000000004 0.68506 0 0 -1.0279989300000001</pose>
+          <geometry>
+            <box>
+              <size>1.288 1.4219999999999999 1.288</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='pilar1'>
+          <pose>-7.5401999999999996 3.6151 1 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.46500000000000002 0.46500000000000002 2</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='pilar2'>
+          <pose>7.4574999999999996 3.6151 1 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.46500000000000002 0.46500000000000002 2</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='pilar3'>
+          <pose>-7.5401999999999996 -3.8856999999999999 1 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.46500000000000002 0.46500000000000002 2</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='pilar4'>
+          <pose>7.4574999999999996 -3.8856999999999999 1 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.46500000000000002 0.46500000000000002 2</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='pallet_mover1'>
+          <pose>-0.61439999999999995 -2.3889999999999998 0.41837999999999997 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.36299999999999999 0.44 0.71899999999999997</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='pallet_mover2'>
+          <pose>-1.6004 4.8224999999999998 0.41837999999999997 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>0.36299999999999999 0.24399999999999999 0.71899999999999997</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='stairs'>
+          <pose>13.018000000000001 3.1652 0.25 0 0 0</pose>
+          <geometry>
+            <box>
+              <size>1.2989999999999999 0.59999999999999998 0.5</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs1'>
+          <pose>1.4661999999999999 -0.017559000000000002 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs2'>
+          <pose>2.6482999999999999 -0.017559000000000002 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs3'>
+          <pose>5.3247 -0.017559000000000002 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs4'>
+          <pose>6.5063000000000004 -0.017559000000000002 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs5'>
+          <pose>9.0757999999999992 -0.017559000000000002 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs6'>
+          <pose>10.257999999999999 -0.017559000000000002 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs7'>
+          <pose>1.4661999999999999 2.5663999999999998 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs8'>
+          <pose>2.6482999999999999 2.5663999999999998 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs9'>
+          <pose>5.3247 2.5663999999999998 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs10'>
+          <pose>6.5063000000000004 2.5663999999999998 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs11'>
+          <pose>9.0757999999999992 2.5663999999999998 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs12'>
+          <pose>10.257999999999999 2.5663999999999998 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs13'>
+          <pose>1.4661999999999999 5.1497000000000002 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs14'>
+          <pose>2.6482999999999999 5.1497000000000002 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs15'>
+          <pose>5.3247 5.1497000000000002 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs16'>
+          <pose>6.5063000000000004 5.1497000000000002 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs17'>
+          <pose>9.0757999999999992 5.1497000000000002 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <collision name='shelfs18'>
+          <pose>10.257999999999999 5.1497000000000002 0.5 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.029999999999999999</radius>
+              <length>1</length>
+            </cylinder>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <self_collide>false</self_collide>
+    </model>
+  </world>
+</sdf>

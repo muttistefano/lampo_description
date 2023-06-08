@@ -12,7 +12,7 @@ from launch_ros.substitutions import FindPackageShare
 from launch.substitutions import PathJoinSubstitution, TextSubstitution
 from launch.actions import OpaqueFunction
 from ament_index_python import get_package_share_directory
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription,ExecuteProcess 
 from launch.actions import GroupAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 # from scripts import GazeboRosPaths
@@ -171,9 +171,10 @@ def generate_launch_description():
             " ","safety_limits:=",safety_limits,
             " ","safety_pos_margin:=",safety_pos_margin,
             " ","safety_k_position:=",safety_k_position,
-            " ","name:=","ur1",
+            " ","name:=","mm1",
             " ","ur_type:=",ur_type,
             " ","prefix:=","sweepee_1/",
+            # " ","prefix:=","",
             " ","prefix_rc:=","sweepee_1",
             " ","simulation_controllers:=",initial_joint_controllers_1,
             " ","use_fake_hardware:=",use_fake_hardware,
@@ -190,7 +191,7 @@ def generate_launch_description():
             " ","safety_limits:=",safety_limits,
             " ","safety_pos_margin:=",safety_pos_margin,
             " ","safety_k_position:=",safety_k_position,
-            " ","name:=","ur2",
+            " ","name:=","mm2",
             " ","ur_type:=",ur_type,
             " ","prefix:=","sweepee_2/",
             " ","prefix_rc:=","sweepee_2",
@@ -236,7 +237,7 @@ def generate_launch_description():
         executable="robot_state_publisher",
         namespace="sweepee_1",
         output="screen",
-        parameters=[robot_description_1,frame_prefix_param_1],
+        parameters=[robot_description_1,frame_prefix_param_1,{"use_sim_time": True}],
     )
 
     robot_state_publisher_node_2 = Node(
@@ -255,7 +256,8 @@ def generate_launch_description():
         parameters=[robot_description_3,frame_prefix_param_3],
     )
 
-    sweepee_1_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/mm.sdf')
+    # sweepee_1_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/amr1.sdf')
+    sweepee_1_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/diff1.sdf')
     spawn_sweepee_1 = Node(
         package='ros_gz_sim',
         executable='create',
@@ -263,58 +265,38 @@ def generate_launch_description():
         arguments=['-file', sweepee_1_path,
                    '-name', 'sweepee_1',
                    '-allow_renaming', 'false',
-                   '-x', '-0.5',
-                   '-y', '2.2'],
+                   '-x', '-3.5',
+                   '-y', '2.2',
+                   '-z', '0.3'],
+    )
+
+    # sweepee_2_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/amr2.sdf')
+    sweepee_2_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/diff2.sdf')
+    spawn_sweepee_2 = Node(
+        package='ros_gz_sim',
+        executable='create',
+        output='screen',
+        arguments=['-file', sweepee_2_path,
+                   '-name', 'sweepee_2',
+                   '-allow_renaming', 'false',
+                   '-x', '0.5',
+                   '-y', '-2.2'],
     )
 
 ########## CONTROLLERS
 
-    # control_node_1 = Node(
-    #     package="controller_manager",
-    #     namespace="sweepee_1",
-    #     executable="ros2_control_node",
-    #     parameters=[robot_description_1,initial_joint_controllers_1 ],
-    #     output="screen",
-    # )
 
-    # control_node_2 = Node(
-    #     package="controller_manager",
-    #     namespace="sweepee_2",
-    #     executable="ros2_control_node",
-    #     parameters=[robot_description_2,initial_joint_controllers_2 ],
-    #     output="screen",
-    # )
 
-    joint_state_broadcaster_spawner_1 = Node(
-        package="controller_manager",
-        namespace="sweepee_1",
-        executable="spawner",
-        output="screen",
-        arguments=["joint_state_broadcaster", "-c", "controller_manager"],
+    load_joint_state_broadcaster = ExecuteProcess(
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+             'joint_state_broadcaster'],
+        output='screen'
     )
 
-    joint_state_broadcaster_spawner_2 = Node(
-        package="controller_manager",
-        namespace="sweepee_2",
-        executable="spawner",
-        output="screen",
-        arguments=["joint_state_broadcaster", "-c", "controller_manager"],
-    )
-
-    initial_joint_controller_spawner_started_1 = Node(
-        package="controller_manager",
-        namespace="sweepee_1",
-        executable="spawner",
-        output="screen",
-        arguments=["joint_trajectory_controller", "-c", "controller_manager"],
-    )
-
-    initial_joint_controller_spawner_started_2 = Node(
-        package="controller_manager",
-        namespace="sweepee_2",
-        executable="spawner",
-        output="screen",
-        arguments=["joint_trajectory_controller", "-c", "controller_manager"],
+    load_joint_trajectory_controller = ExecuteProcess(
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+             'joint_trajectory_controller'],
+        output='screen'
     )
 
 
@@ -322,7 +304,7 @@ def generate_launch_description():
 
 ########## VISUALIZATION
 
-    world_path = os.path.join(get_package_share_directory('lampo_description'),'worlds/warehouse.sdf')
+    world_path = os.path.join(get_package_share_directory('lampo_description'),'worlds/warehouse_big.sdf')
 
     gazebo_server = GroupAction(
         actions=[
@@ -330,13 +312,13 @@ def generate_launch_description():
             PythonLaunchDescriptionSource(
                 [os.path.join(get_package_share_directory('ros_gz_sim'),
                               'launch', 'gz_sim.launch.py')]),
-            launch_arguments=[('gz_args', [' -r -v 2 ' + world_path ])]),
+            launch_arguments=[('gz_args', [' -r -v 4 ' + world_path ])]),
             ]
             )
         
 
     rviz_config_file = PathJoinSubstitution(
-        [FindPackageShare("lampo_description"), "rviz", "config.rviz"]
+        [FindPackageShare("lampo_description"), "rviz", "config2.rviz"]
     )
 
     rviz_node = Node(
@@ -347,18 +329,34 @@ def generate_launch_description():
         arguments=["-d", rviz_config_file],
     )
 
+    # tf_sw1 = Node(
+    #         package="tf2_ros",
+    #         executable="static_transform_publisher",
+    #         output="screen" ,
+    #         arguments=["0", "0", "0", "0", "0", "0", "map", "sweepee_1/odom"]
+    #     )
+
+    # tf_sw2 = Node(
+    #         package="tf2_ros",
+    #         executable="static_transform_publisher",
+    #         output="screen" ,
+    #         arguments=["0", "0", "0", "0", "0", "0", "map", "sweepee_2/odom"]
+    #     )
+
     tf_sw1 = Node(
             package="tf2_ros",
             executable="static_transform_publisher",
             output="screen" ,
-            arguments=["0", "0", "0", "0", "0", "0", "map", "sweepee_1/odom"]
+            arguments=["0", "0", "0", "0", "0", "0", "sweepee_1/odom", "sweepee_1/base_footprint"],
+            parameters=[{"use_sim_time": True}]
         )
 
     tf_sw2 = Node(
             package="tf2_ros",
             executable="static_transform_publisher",
             output="screen" ,
-            arguments=["0", "0", "0", "0", "0", "0", "map", "sweepee_2/odom"]
+            arguments=["0", "0", "0", "0", "0", "0", "sweepee_2/odom", "sweepee_2/base_footprint"],
+            parameters=[{"use_sim_time": True}]
         )
 
     tf_sw3 = Node(
@@ -379,7 +377,7 @@ def generate_launch_description():
             package="ros_gz_bridge",
             executable="parameter_bridge",
             output="screen" ,
-            parameters=[config_param],
+            parameters=[config_param,{"use_sim_time": True}],
         )
 
 
@@ -388,14 +386,18 @@ def generate_launch_description():
 
     nodes_to_start = [
         gazebo_server,
-        # rviz_node,
+        rviz_node,
         # TimerAction(
         #     period=2.0,
         #     actions=[robot_state_publisher_node_1]#control_node_1],
         # ),
         TimerAction(
             period=5.0,
-            actions=[spawn_sweepee_1,robot_state_publisher_node_1]#control_node_1],
+            actions=[spawn_sweepee_1,robot_state_publisher_node_1],
+        ),
+        TimerAction(
+            period=7.0,
+            actions=[spawn_sweepee_2,robot_state_publisher_node_2],
         ),
         TimerAction(
             period=7.0,
