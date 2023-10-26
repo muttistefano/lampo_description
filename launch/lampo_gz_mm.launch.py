@@ -174,7 +174,6 @@ def generate_launch_description():
             " ","name:=","mm1",
             " ","ur_type:=",ur_type,
             " ","prefix:=","sweepee_1/",
-            # " ","prefix:=","",
             " ","prefix_rc:=","sweepee_1",
             " ","simulation_controllers:=",initial_joint_controllers_1,
             " ","use_fake_hardware:=",use_fake_hardware,
@@ -256,8 +255,7 @@ def generate_launch_description():
         parameters=[robot_description_3,frame_prefix_param_3],
     )
 
-    # sweepee_1_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/amr1.sdf')
-    sweepee_1_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/diff1.sdf')
+    sweepee_1_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/amr1.sdf')
     spawn_sweepee_1 = Node(
         package='ros_gz_sim',
         executable='create',
@@ -270,8 +268,7 @@ def generate_launch_description():
                    '-z', '0.3'],
     )
 
-    # sweepee_2_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/amr2.sdf')
-    sweepee_2_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/diff2.sdf')
+    sweepee_2_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/amr2.sdf')
     spawn_sweepee_2 = Node(
         package='ros_gz_sim',
         executable='create',
@@ -279,8 +276,8 @@ def generate_launch_description():
         arguments=['-file', sweepee_2_path,
                    '-name', 'sweepee_2',
                    '-allow_renaming', 'false',
-                   '-x', '0.5',
-                   '-y', '-2.2'],
+                   '-x', '-3.0',
+                   '-y', '-2.0'],
     )
 
 ########## CONTROLLERS
@@ -326,6 +323,7 @@ def generate_launch_description():
         executable="rviz2",
         name="rviz2",
         output="screen",
+        parameters=[{"use_sim_time": True}],
         arguments=["-d", rviz_config_file],
     )
 

@@ -50,7 +50,7 @@ def generate_launch_description():
             "nav_params_1.yaml")
 
 
-        amcl =  Node(
+        amcl1 =  Node(
                 package='nav2_amcl',
                 namespace="sweepee_1",
                 executable='amcl',
@@ -59,10 +59,10 @@ def generate_launch_description():
                 respawn=True,
                 respawn_delay=2.0,
                 parameters=[nav_sw1_params],
-                arguments=['--ros-args', '--log-level', "warn"])
+                arguments=['--ros-args', '--log-level', "info"])
 
 
-        lifecycle_nodes = ["amcl",
+        lifecycle_nodes = ['amcl',
                            'controller_server',
                         #    'smoother_server',
                            'planner_server',
@@ -73,6 +73,10 @@ def generate_launch_description():
                         ]
         
         lifecycle_map   = ["map_server"]
+
+        lifecycle_2     =  ["amcl",
+                            'planner_server']
+                        #     "costmap_follow"]
 
         controller_server = Node(
                 package='nav2_controller',
@@ -102,6 +106,7 @@ def generate_launch_description():
                 namespace="sweepee_1",
                 output='screen',
                 respawn=True,
+                # prefix=['xterm -e gdb -ex run --args'],
                 respawn_delay=2.0,
                 parameters=[nav_sw1_params],
                 arguments=['--ros-args', '--log-level', "info"])
@@ -123,6 +128,7 @@ def generate_launch_description():
                 name='bt_navigator',
                 namespace="sweepee_1",
                 output='screen',
+                prefix=['xterm -e gdb -ex run --args'],
                 respawn=True,
                 respawn_delay=2.0,
                 parameters=[nav_sw1_params],
@@ -170,18 +176,71 @@ def generate_launch_description():
                 parameters=[{'autostart': True},
                             {'node_names': lifecycle_map}])   
 
+        lf_2    = Node(
+                package='nav2_lifecycle_manager',
+                executable='lifecycle_manager',
+                name='lifecycle_manager_2',
+                namespace="sweepee_2",
+                output='screen',
+                arguments=['--ros-args', '--log-level', "info"],
+                parameters=[{'autostart': True},
+                            {'node_names': lifecycle_2}])   
+
+        nav_sw2_params = os.path.join(
+            get_package_share_directory('lampo_description'),
+            'config',
+            "nav_params_2.yaml")
+
+        amcl2 =  Node(
+                package='nav2_amcl',
+                namespace="sweepee_2",
+                executable='amcl',
+                name='amcl',
+                output='screen',
+                respawn=True,
+                respawn_delay=2.0,
+                parameters=[nav_sw2_params],
+                arguments=['--ros-args', '--log-level', "info"])
+
+        costmap_follow = Node(
+                package='nav2_costmap_2d',
+                executable='nav2_costmap_2d',
+                namespace="sweepee_2",
+                name='costmap_follow',
+                output='screen',
+                respawn=True,
+                respawn_delay=2.0,
+                parameters=[nav_sw2_params],
+                arguments=['--ros-args', '--log-level', "info"])
+
+        planner_server2 = Node(
+                package='nav2_planner',
+                executable='planner_server',
+                name='planner_server',
+                namespace="sweepee_2",
+                output='screen',
+                respawn=True,
+                respawn_delay=2.0,
+                parameters=[nav_sw2_params],
+                arguments=['--ros-args', '--log-level', "info"])
+
         nodes_to_start = [
                         map_server,
-                        TimerAction(
-                                period=1.0,
-                                actions=[amcl,lf_map],
-                        ),      
+                        amcl1,
+                        amcl2,
+                        planner_server2,
+                        # costmap_follow,
+                        lf_map,
                         TimerAction(
                                 period=2.0,
+                                actions=[lf_2],
+                        ),      
+                        TimerAction(
+                                period=3.0,
                                 actions=[controller_server,planner_server,behavior_server,bt_navigator],
                         ),                   
                         TimerAction(
-                                period=5.0,
+                                period=8.0,
                                 actions=[lf_manager],
                         ),
                         # TimerAction(

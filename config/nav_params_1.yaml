@@ -303,6 +303,9 @@ sweepee_1:
         tolerance: 0.5
         use_astar: false
         allow_unknown: true
+        follower_costmap: "/sweepee_2/global_costmap/costmap"
+        follower_frame: "sweepee_2/base_footprint"
+        leader_frame: "sweepee_1/base_footprint"
 
   planner_server_rclcpp_node:
     ros__parameters:
