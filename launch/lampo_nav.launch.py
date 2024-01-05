@@ -240,7 +240,7 @@ def generate_launch_description():
                         #         actions=[controller_server,planner_server,behavior_server,bt_navigator],
                         # ),                   
                         TimerAction(
-                                period=8.0,
+                                period=3.0,
                                 actions=[lf_manager],
                         ),
                         ]

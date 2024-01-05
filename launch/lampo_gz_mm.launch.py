@@ -342,7 +342,7 @@ def generate_launch_description():
                               'launch', 'gz_sim.launch.py')]),
             launch_arguments={
                 'gz_args': [' -r -v 4 ' + world_path ],
-                'gz_version': "7"
+                'gz_version': "8"
             }.items())
             ]
             )
