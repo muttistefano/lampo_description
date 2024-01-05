@@ -155,8 +155,8 @@
       </gazebo>
 
       <gazebo reference="${prefix}rear_left_wheel">
-        <mu1>5.0</mu1>
-        <mu2>1.0</mu2>
+        <mu1>0.0</mu1>
+        <mu2>0.0</mu2>
         <fdir1 gz:expressed_in='${prefix}base_footprint'>1 1 0</fdir1>
       </gazebo>
 
@@ -167,8 +167,8 @@
       </gazebo>
 
         <gazebo reference="${prefix}rear_right_wheel">
-        <mu1>5.0</mu1>
-        <mu2>1.0</mu2>
+        <mu1>0.0</mu1>
+        <mu2>0.0</mu2>
         <fdir1 gz:expressed_in='${prefix}base_footprint'>1 -1 0</fdir1>
       </gazebo>
 
@@ -235,15 +235,10 @@
         </ray>
         <always_on>1</always_on>
         <visualize>true</visualize>
-        <!-- <plugin
-            filename="gz-sim-sensors-system"
-            name="gz::sim::systems::Sensors">
-        <render_engine>ogre2</render_engine>
-        </plugin> -->
     </sensor>
   </gazebo>
 
-  <gazebo>
+  <!-- <gazebo>
     <plugin
       filename="gz-sim-mecanum-drive-system"
       name="gz::sim::systems::MecanumDrive">
@@ -257,10 +252,33 @@
       <min_acceleration>-5</min_acceleration>
       <max_acceleration>5</max_acceleration>
       <topic>${prefix}cmd_vel</topic>
-      <frame_id>${prefix}base_link_sweepee</frame_id>
+      <frame_id>${prefix}base_footprint</frame_id>
+      <odom_topic>${prefix}odom</odom_topic>
 
     </plugin>
-  </gazebo>
+  </gazebo> -->
+  <gazebo>
+      <plugin
+        filename="gz-sim-diff-drive-system"
+        name="gz::sim::systems::DiffDrive">
+        <left_joint>${prefix}front_left_wheel_joint</left_joint>
+        <right_joint>${prefix}front_right_wheel_joint</right_joint>
+        <wheel_separation>0.5</wheel_separation>
+        <wheel_radius>0.1</wheel_radius>
+        <odom_publish_frequency>25</odom_publish_frequency>
+        <max_linear_acceleration>1</max_linear_acceleration>
+        <min_linear_acceleration>-1</min_linear_acceleration>
+        <max_angular_acceleration>2</max_angular_acceleration>
+        <min_angular_acceleration>-2</min_angular_acceleration>
+        <max_linear_velocity>0.5</max_linear_velocity>
+        <min_linear_velocity>-0.5</min_linear_velocity>
+        <max_angular_velocity>1</max_angular_velocity>
+        <min_angular_velocity>-1</min_angular_velocity>
+        <topic>${prefix}cmd_vel</topic>
+        <frame_id>${prefix}base_footprint</frame_id>
+        <odom_topic>${prefix}odom</odom_topic>
+      </plugin>
+    </gazebo>
 
   </xacro:macro>
 

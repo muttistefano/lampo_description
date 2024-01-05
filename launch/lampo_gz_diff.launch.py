@@ -16,28 +16,14 @@ from launch.actions import IncludeLaunchDescription,ExecuteProcess
 from launch.actions import GroupAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 # from scripts import GazeboRosPaths
+import launch_ros.descriptions
+
 import xacro
 
 
 
 def generate_launch_description():
 
-
-    # model, plugin, media = GazeboRosPaths.get_paths()
-
-    # if 'GAZEBO_MODEL_PATH' in environ:
-    #     model += pathsep+environ['GAZEBO_MODEL_PATH']
-    # if 'GAZEBO_PLUGIN_PATH' in environ:
-    #     plugin += pathsep+environ['GAZEBO_PLUGIN_PATH']
-    # if 'GAZEBO_RESOURCE_PATH' in environ:
-    #     media += pathsep+environ['GAZEBO_RESOURCE_PATH']
-
-    # env = {'GAZEBO_MODEL_PATH': model,
-    #        'GAZEBO_PLUGIN_PATH': plugin,
-    #        'GAZEBO_RESOURCE_PATH': media}
-
-    # print(env)
-    # sys.exit()
 
     declared_arguments = []
     # UR specific arguments
@@ -104,23 +90,23 @@ def generate_launch_description():
     )
     declared_arguments.append(
         DeclareLaunchArgument(
-            "use_fake_hardware",
+            "use_mock_hardware",
             default_value='true',
-            description="use_fake_hardware",
+            description="use_mock_hardware",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
-            "sim_gazebo",
-            default_value='false',
-            description="sim_gazebo",
+            "mm",
+            default_value='true',
+            description="mobile manipulators",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
-            "sim_ignition",
+            "sim_gz",
             default_value='true',
-            description="sim_ignition",
+            description="sim_gz",
         )
     )
 
@@ -135,9 +121,9 @@ def generate_launch_description():
     description_file         = LaunchConfiguration("description_file")
     prefix                   = LaunchConfiguration("prefix")
     frame_prefix             = LaunchConfiguration("frame_prefix")
-    use_fake_hardware        = LaunchConfiguration("use_fake_hardware")
-    sim_gazebo               = LaunchConfiguration("sim_gazebo")
-    sim_ignition             = LaunchConfiguration("sim_ignition")
+    use_mock_hardware        = LaunchConfiguration("use_mock_hardware")
+    mm                       = LaunchConfiguration("mm")
+    sim_gz                   = LaunchConfiguration("sim_gz")
 
     initial_joint_controllers_1 = PathJoinSubstitution(
         [
@@ -163,7 +149,8 @@ def generate_launch_description():
         ]
     )
 
-    robot_description_content_1 = Command(
+
+    robot_description_content_1 = launch_ros.descriptions.ParameterValue(Command(
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
@@ -174,16 +161,14 @@ def generate_launch_description():
             " ","name:=","mm1",
             " ","ur_type:=",ur_type,
             " ","prefix:=","sweepee_1/",
-            # " ","prefix:=","",
             " ","prefix_rc:=","sweepee_1",
             " ","simulation_controllers:=",initial_joint_controllers_1,
-            " ","use_fake_hardware:=",use_fake_hardware,
-            " ","sim_gazebo:=",sim_gazebo,
-            " ","sim_ignition:=",sim_ignition,
-        ]
-    )
+            " ","use_mock_hardware:=",use_mock_hardware,
+            " ","mm:=",mm,
+            " ","sim_gz:=",sim_gz,
+        ]), value_type=str)
 
-    robot_description_content_2 = Command(
+    robot_description_content_2 = launch_ros.descriptions.ParameterValue(Command(
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
@@ -196,13 +181,12 @@ def generate_launch_description():
             " ","prefix:=","sweepee_2/",
             " ","prefix_rc:=","sweepee_2",
             " ","simulation_controllers:=",initial_joint_controllers_2,
-            " ","use_fake_hardware:=",use_fake_hardware,
-            " ","sim_gazebo:=",sim_gazebo,
-            " ","sim_ignition:=",sim_ignition,
-        ]
-    )
-
-    robot_description_content_3 = Command(
+            " ","use_mock_hardware:=",use_mock_hardware,
+            " ","mm:=",mm,
+            " ","sim_gz:=",sim_gz,
+        ]), value_type=str)
+    
+    robot_description_content_3 = launch_ros.descriptions.ParameterValue(Command(
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
@@ -210,18 +194,17 @@ def generate_launch_description():
             " ","safety_limits:=",safety_limits,
             " ","safety_pos_margin:=",safety_pos_margin,
             " ","safety_k_position:=",safety_k_position,
-            " ","name:=","ur3",
+            " ","name:=","mm3",
             " ","ur_type:=",ur_type,
             " ","prefix:=","sweepee_3/",
             " ","prefix_rc:=","sweepee_3",
             " ","simulation_controllers:=",initial_joint_controllers_3,
-            " ","use_fake_hardware:=",use_fake_hardware,
-            " ","sim_gazebo:=",sim_gazebo,
-            " ","sim_ignition:=",sim_ignition,
-        ]
-    )
+            " ","use_mock_hardware:=",use_mock_hardware,
+            " ","mm:=",mm,
+            " ","sim_gz:=",sim_gz,
+        ]), value_type=str)
+    
 
-   
     robot_description_1  = {"robot_description": robot_description_content_1}
     robot_description_2  = {"robot_description": robot_description_content_2}
     robot_description_3  = {"robot_description": robot_description_content_3}
@@ -245,7 +228,7 @@ def generate_launch_description():
         executable="robot_state_publisher",
         namespace="sweepee_2",
         output="screen",
-        parameters=[robot_description_2,frame_prefix_param_2],
+        parameters=[robot_description_2,frame_prefix_param_2,{"use_sim_time": True}],
     )
 
     robot_state_publisher_node_3 = Node(
@@ -256,63 +239,84 @@ def generate_launch_description():
         parameters=[robot_description_3,frame_prefix_param_3],
     )
 
-    # sweepee_1_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/amr1.sdf')
-    sweepee_1_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/diff1.sdf')
+    sweepee_1_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/amr1.sdf')
     spawn_sweepee_1 = Node(
+        name='spawn1',
         package='ros_gz_sim',
         executable='create',
         output='screen',
-        arguments=['-file', sweepee_1_path,
+        arguments=[ '-topic', 'sweepee_1/robot_description',
+                #    '-file', sweepee_1_path,
                    '-name', 'sweepee_1',
-                   '-allow_renaming', 'false',
+                   '-allow_renaming', 'true',
                    '-x', '-3.5',
                    '-y', '2.2',
                    '-z', '0.3'],
+        remappings=[('/sweepee', 'sweepee_1/robot_description')],
+        parameters=[{"use_sim_time": True}],
     )
 
-    # this node is broken, this is temporary fix
-
-    # spawn_sweepee_1 = ExecuteProcess(
-    #         cmd=[[ "/home/gino/ROS/lampo_ws_ros2_rolling/install/ros_gz_sim/lib/ros_gz_sim/create -file /home/gino/ROS/lampo_ws_ros2_rolling/install/lampo_description/share/lampo_description/urdf/diff1.sdf -name sweepee_1 -allow_renaming false -x -3.5 -y 2.2 -z 0.3"
-    #         ]],
-    #         shell=True
-    #     )
-
-    # sweepee_2_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/amr2.sdf')
-    sweepee_2_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/diff2.sdf')
+    sweepee_2_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/amr2.sdf')
     spawn_sweepee_2 = Node(
+        name='spawn2',
         package='ros_gz_sim',
         executable='create',
         output='screen',
-        arguments=['-file', sweepee_2_path,
+        arguments=['-topic', 'sweepee_2/robot_description',
+                #    '-file', sweepee_2_path,
                    '-name', 'sweepee_2',
-                   '-allow_renaming', 'false',
+                   '-allow_renaming', 'true',
                    '-x', '-3.0',
                    '-y', '-2.0'],
+        remappings=[('/sweepee', 'sweepee_2/robot_description')],
+        parameters=[{"use_sim_time": True}],
     )
-
-    # spawn_sweepee_2 = ExecuteProcess(
-    #         cmd=[[ "/home/gino/ROS/lampo_ws_ros2_rolling/install/ros_gz_sim/lib/ros_gz_sim/create -file /home/gino/ROS/lampo_ws_ros2_rolling/install/lampo_description/share/lampo_description/urdf/diff2.sdf -name sweepee_2 -allow_renaming false -x -3.0 -y -2.0 -z 0.3"
-    #         ]],
-    #         shell=True
-    #     )
 
 ########## CONTROLLERS
 
-
-
-    load_joint_state_broadcaster = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
-             'joint_state_broadcaster'],
-        output='screen'
+    sw1_control_node = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        namespace="sweepee_1",
+        parameters=[robot_description_1, initial_joint_controllers_1,{"use_sim_time": True}],
+        output="both",
     )
 
-    load_joint_trajectory_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
-             'joint_trajectory_controller'],
-        output='screen'
+    sw2_control_node = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        namespace="sweepee_2",
+        parameters=[robot_description_2, initial_joint_controllers_2,{"use_sim_time": True}],
+        output="both",
     )
 
+    joint_state_broadcaster_spawner_1 = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster", "--controller-manager", "sweepee_1/controller_manager"],
+        parameters=[{"use_sim_time": True}],
+    )
+
+    position_controller_spawner_1 = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["position_controller", "--controller-manager", "sweepee_1/controller_manager"],
+        parameters=[{"use_sim_time": True}],
+    )
+
+    joint_state_broadcaster_spawner_2 = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster", "--controller-manager", "sweepee_2/controller_manager"],
+        parameters=[{"use_sim_time": True}],
+    )
+
+    position_controller_spawner_2 = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["position_controller", "--controller-manager", "sweepee_2/controller_manager"],
+        parameters=[{"use_sim_time": True}],
+    )
 
 
 
@@ -326,10 +330,12 @@ def generate_launch_description():
             PythonLaunchDescriptionSource(
                 [os.path.join(get_package_share_directory('ros_gz_sim'),
                               'launch', 'gz_sim.launch.py')]),
-            launch_arguments=[('gz_args', [' -r -v 4 ' + world_path ])]),
+            launch_arguments={
+                'gz_args': [' -r -v 4 ' + world_path ],
+                'gz_version': "8"
+            }.items())
             ]
             )
-        
 
     rviz_config_file = PathJoinSubstitution(
         [FindPackageShare("lampo_description"), "rviz", "config2.rviz"]
@@ -344,19 +350,6 @@ def generate_launch_description():
         arguments=["-d", rviz_config_file],
     )
 
-    # tf_sw1 = Node(
-    #         package="tf2_ros",
-    #         executable="static_transform_publisher",
-    #         output="screen" ,
-    #         arguments=["0", "0", "0", "0", "0", "0", "map", "sweepee_1/odom"]
-    #     )
-
-    # tf_sw2 = Node(
-    #         package="tf2_ros",
-    #         executable="static_transform_publisher",
-    #         output="screen" ,
-    #         arguments=["0", "0", "0", "0", "0", "0", "map", "sweepee_2/odom"]
-    #     )
 
     tf_sw1 = Node(
             package="tf2_ros",
@@ -395,42 +388,50 @@ def generate_launch_description():
             parameters=[config_param,{"use_sim_time": True}],
         )
 
+    ros_to_gz_1 = Node(
+            package="lampo_description",
+            executable="ros_to_gz_commands.py",
+            namespace="sweepee_1",
+            output="screen",
+            parameters=[{"use_sim_time": True}],
+        )
 
+    ros_to_gz_2 = Node(
+            package="lampo_description",
+            executable="ros_to_gz_commands.py",
+            namespace="sweepee_2",
+            output="screen",
+            parameters=[{"use_sim_time": True}],
+        )
+    
 ########## LAUNCHING
 
 
     nodes_to_start = [
         gazebo_server,
         rviz_node,
-        # TimerAction(
-        #     period=2.0,
-        #     actions=[robot_state_publisher_node_1]#control_node_1],
-        # ),
         TimerAction(
-            period=5.0,
+            period=2.0,
             actions=[spawn_sweepee_1,robot_state_publisher_node_1],
         ),
         TimerAction(
-            period=7.0,
+            period=4.0,
             actions=[spawn_sweepee_2,robot_state_publisher_node_2],
         ),
         TimerAction(
-            period=7.0,
-            actions=[gz_bridge]#control_node_1],
+            period=6.0,
+            actions=[sw1_control_node,sw2_control_node,ros_to_gz_1,ros_to_gz_2]
         ),
-        
-        # TimerAction(
-        #     period=2.0,
-        #     actions=[joint_state_broadcaster_spawner_1,initial_joint_controller_spawner_started_1]
-        # ),
-        # TimerAction(
-        #     period=3.0,
-        #     actions=[spawn_sweepee_2,robot_state_publisher_node_2]#control_node_2],
-        # ),
-        # TimerAction(
-        #     period=5.0,
-        #     actions=[spawn_sweepee_3,robot_state_publisher_node_3]#control_node_2],
-        # ),
+        TimerAction(
+            period=8.0,
+            actions=[joint_state_broadcaster_spawner_1,
+                     position_controller_spawner_1]
+        ),
+        TimerAction(
+            period=10.0,
+            actions=[joint_state_broadcaster_spawner_2,
+                     position_controller_spawner_2]
+        ),
         # TimerAction(
         #     period=18.0,
         #     actions=[joint_state_broadcaster_spawner_2,initial_joint_controller_spawner_started_2]
@@ -443,6 +444,10 @@ def generate_launch_description():
         #     period=14.0,
         #     actions=[map_server,nav_sw1],
         # )
+        TimerAction(
+            period=7.0,
+            actions=[gz_bridge]
+        ),
     ]
 
     return LaunchDescription(declared_arguments + nodes_to_start)
