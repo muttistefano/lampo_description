@@ -12,10 +12,17 @@ find_package(ament_cmake REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 install(
-  DIRECTORY launch meshes urdf rviz map worlds scripts config srdf
+  DIRECTORY launch meshes urdf rviz map worlds config srdf
   DESTINATION share/${PROJECT_NAME}
 )
 
+# Install Python modules
+ament_python_install_package(${PROJECT_NAME})
+# Install Python executables
+install(PROGRAMS
+  lampo_description/ros_to_gz_commands.py
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

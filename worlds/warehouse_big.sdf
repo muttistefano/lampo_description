@@ -86,7 +86,7 @@
           <geometry>
             <mesh>
               <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
-              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <uri>file:///home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/meshes/Depot.dae</uri>
               <submesh>
                 <name>WALLS</name>
                 <center>false</center>
@@ -98,15 +98,15 @@
             <specular>1 1 1 1</specular>
             <pbr>
               <metal>
-                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/WALLS_Albedo.png</albedo_map>
-                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/WALLS_Normal.png</normal_map>
-                <metalness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/WALLS_Metalness.png</metalness_map>
-                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/WALLS_Roughness.png</roughness_map>
-                <light_map uv_set='1'>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/DepotLightmap.png</light_map>
+                <albedo_map>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/WALLS_Albedo.png</albedo_map>
+                <normal_map>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/WALLS_Normal.png</normal_map>
+                <metalness_map>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/WALLS_Metalness.png</metalness_map>
+                <roughness_map>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/WALLS_Roughness.png</roughness_map>
+                <light_map uv_set='1'>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/DepotLightmap.png</light_map>
               </metal>
             </pbr>
             <script>
-              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/scripts/</uri>
+              <uri>file:///home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/scripts/</uri>
               <uri>materials/textures/</uri>
               <name>UrbanTile/WALLS_Diffuse</name>
             </script>
@@ -116,7 +116,7 @@
           <geometry>
             <mesh>
               <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
-              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <uri>file:///home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/meshes/Depot.dae</uri>
               <submesh>
                 <name>PILLERS</name>
                 <center>false</center>
@@ -128,15 +128,15 @@
             <specular>1 1 1 1</specular>
             <pbr>
               <metal>
-                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/PILLERS_Albedo.png</albedo_map>
-                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/PILLERS_Normal.png</normal_map>
-                <metalness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/PILLERS_Metalness.png</metalness_map>
-                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/PILLERS_Roughness.png</roughness_map>
-                <light_map uv_set='1'>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/DepotLightmap.png</light_map>
+                <albedo_map>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/PILLERS_Albedo.png</albedo_map>
+                <normal_map>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/PILLERS_Normal.png</normal_map>
+                <metalness_map>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/PILLERS_Metalness.png</metalness_map>
+                <roughness_map>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/PILLERS_Roughness.png</roughness_map>
+                <light_map uv_set='1'>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/DepotLightmap.png</light_map>
               </metal>
             </pbr>
             <script>
-              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/scripts/</uri>
+              <uri>file:///home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/scripts/</uri>
               <uri>materials/textures/</uri>
               <name>UrbanTile/PILLERS_Diffuse</name>
             </script>
@@ -146,7 +146,7 @@
           <geometry>
             <mesh>
               <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
-              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Depot.dae</uri>
+              <uri>file:///home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/meshes/Depot.dae</uri>
               <submesh>
                 <name>FLOOR</name>
                 <center>false</center>
@@ -158,15 +158,15 @@
             <specular>1 1 1 1</specular>
             <pbr>
               <metal>
-                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FLOOR_Albedo.png</albedo_map>
-                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FLOOR_Normal.png</normal_map>
-                <metalness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FLOOR_Metalness.png</metalness_map>
-                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/FLOOR_Roughness.png</roughness_map>
-                <light_map uv_set='1'>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/DepotLightmap.png</light_map>
+                <albedo_map>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/FLOOR_Albedo.png</albedo_map>
+                <normal_map>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/FLOOR_Normal.png</normal_map>
+                <metalness_map>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/FLOOR_Metalness.png</metalness_map>
+                <roughness_map>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/FLOOR_Roughness.png</roughness_map>
+                <light_map uv_set='1'>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/DepotLightmap.png</light_map>
               </metal>
             </pbr>
             <script>
-              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/scripts/</uri>
+              <uri>file:///home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/scripts/</uri>
               <uri>materials/textures/</uri>
               <name>UrbanTile/FLOOR_Diffuse</name>
             </script>
@@ -176,7 +176,7 @@
           <geometry>
             <mesh>
               <scale>0.59999999999999998 0.59999999999999998 0.59999999999999998</scale>
-              <uri>file:///home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/meshes/Crates.dae</uri>
+              <uri>file:///home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/meshes/Crates.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -184,9 +184,9 @@
             <specular>1 1 1 1</specular>
             <pbr>
               <metal>
-                <albedo_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/Crates_Crates_BaseColor.png</albedo_map>
-                <normal_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/Crates_Crates_Normal.png</normal_map>
-                <roughness_map>/home/gino/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/5/materials/textures/Crates_Crates_Roughness.png</roughness_map>
+                <albedo_map>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/Crates_Crates_BaseColor.png</albedo_map>
+                <normal_map>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/Crates_Crates_Normal.png</normal_map>
+                <roughness_map>/home/stefanomutti/.gz/fuel/fuel.gazebosim.org/openrobotics/models/depot/6/materials/textures/Crates_Crates_Roughness.png</roughness_map>
               </metal>
             </pbr>
           </material>

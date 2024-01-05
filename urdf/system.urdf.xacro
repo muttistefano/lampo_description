@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<robot name="mobile_manipulator" xmlns:xacro="http://ros.org/wiki/xacro" xmlns:gz="http://gazebosim.org/schema">>
+<robot name="mm1" xmlns:xacro="http://ros.org/wiki/xacro" xmlns:gz="http://gazebosim.org/schema">>
 
   <xacro:include filename="$(find lampo_description)/urdf/sweepee/sweepee.gazebo.xacro" />
   <xacro:include filename="$(find lampo_description)/urdf/sweepee/sweepee.xacro" />
@@ -39,10 +39,8 @@
   <xacro:arg name="tool_tcp_port" default="54321" />
 
     <!-- Simulation parameters -->
-  <xacro:arg name="use_fake_hardware" default="true" />
-  <xacro:arg name="fake_sensor_commands" default="true" />
   <xacro:arg name="sim_gazebo" default="false" />
-  <xacro:arg name="sim_ignition" default="true" />
+  <xacro:arg name="sim_gz" default="false" />
   <xacro:arg name="mm" default="false" />
   <xacro:arg name="simulation_controllers" default="error_default" />
 
@@ -60,107 +58,183 @@
 
   <xacro:sweepee_gazebo />
 
-  <xacro:if value="$(arg sim_gazebo)">
-    <gazebo reference="world">
-      <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
-        <robot_param>robot_description</robot_param>
-        <robot_namespace>$(arg prefix)</robot_namespace>
-	      <parameters>$(arg simulation_controllers)</parameters>
-        <robot_param_node>robot_state_publisher</robot_param_node>
-      </plugin>
-    </gazebo>
-  </xacro:if>
-
-  <xacro:if value="$(arg sim_ignition)">
-    <plugin
-      filename="gz-sim-sensors-system"
-      name="gz::sim::systems::Sensors">
-      <render_engine>ogre2</render_engine>
-    </plugin>
-  </xacro:if>
 
    <!-- arm -->
   <xacro:if value="$(arg mm)">
     <xacro:ur_robot
       name="$(arg name)"
-      prefix="$(arg prefix)"
+      tf_prefix="$(arg prefix)"
       parent="$(arg prefix)base_footprint"
       joint_limits_parameters_file="$(arg joint_limit_params)"
       kinematics_parameters_file="$(arg kinematics_params)"
       physical_parameters_file="$(arg physical_params)"
       visual_parameters_file="$(arg visual_params)"
-      transmission_hw_interface="$(arg transmission_hw_interface)"
       safety_limits="$(arg safety_limits)"
       safety_pos_margin="$(arg safety_pos_margin)"
       safety_k_position="$(arg safety_k_position)"
-      use_fake_hardware="$(arg use_fake_hardware)"
-      fake_sensor_commands="$(arg fake_sensor_commands)"
-      sim_gazebo="$(arg sim_gazebo)"
-      sim_ignition="$(arg sim_ignition)"
-      headless_mode="$(arg headless_mode)"
-      initial_positions="${xacro.load_yaml(initial_positions_file)}"
-      use_tool_communication="$(arg use_tool_communication)"
-      tool_voltage="$(arg tool_voltage)"
-      tool_parity="$(arg tool_parity)"
-      tool_baud_rate="$(arg tool_baud_rate)"
-      tool_stop_bits="$(arg tool_stop_bits)"
-      tool_rx_idle_chars="$(arg tool_rx_idle_chars)"
-      tool_tx_idle_chars="$(arg tool_tx_idle_chars)"
-      tool_device_name="$(arg tool_device_name)"
-      tool_tcp_port="$(arg tool_tcp_port)"
-      robot_ip="$(arg robot_ip)"
-      script_filename="$(arg script_filename)"
-      output_recipe_filename="$(arg output_recipe_filename)"
-      input_recipe_filename="$(arg input_recipe_filename)"
       >
       <origin xyz="0 0 0.4" rpy="0 0 0" />          
     </xacro:ur_robot>
   </xacro:if>
 
 
-  <xacro:if value="$(arg sim_ignition)">
+  <xacro:if value="$(arg mm)">
     <gazebo>
-        <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-          <robot_param>robot_description</robot_param>
-          <robot_param_node>robot_state_publisher</robot_param_node>
-          <!-- <robot_namespace>$(arg prefix)</robot_namespace> -->
-          <parameters>$(arg simulation_controllers)</parameters>
-          <ros>
-            <namespace>$(arg prefix_rc)</namespace>
-          </ros>
-        </plugin>
-    </gazebo>
-  </xacro:if>
-
-
-
-
-
-  <!-- <joint name="$(arg prefix)lifter" type="fixed">
-    <parent link="$(arg prefix)base_footprint"/>
-    <child link="$(arg prefix)base_link"/>
-    <origin xyz="0 0 0.28" rpy=" 0 0 0"/>
-    <axis xyz="0 0 1"/>
-  </joint> -->
-
-
-  <!-- <gazebo>
-    <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
-        <ros>
-          <argument>~cmd_vel:=custom_cmd_vel</argument>
-          <argument>~odom:=custom_odom</argument>
-        </ros>
-        <update_rate>100</update_rate>
-        <publish_rate>10</publish_rate>
-        <publish_odom>true</publish_odom>
-        <publish_odom_tf>true</publish_odom_tf>
-        <odometry_frame>$(arg prefix)odom</odometry_frame>
-        <robot_base_frame>$(arg prefix)base_footprint</robot_base_frame>
-        <covariance_x>0.0001</covariance_x>
-        <covariance_y>0.0001</covariance_y>
-        <covariance_yaw>0.01</covariance_yaw>
+      <plugin
+        filename="gz-sim-joint-position-controller-system"
+        name="gz::sim::systems::JointPositionController">
+        <joint_name>$(arg prefix_rc)/shoulder_pan_joint</joint_name>
+        <topic>$(arg prefix_rc)/shoulder_pan_joint</topic>
+        <p_gain>2000</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>200.00</d_gain>
+        <i_max>100000</i_max>
+        <i_min>-100000</i_min>
+        <cmd_max>100000000</cmd_max>
+        <cmd_min>-100000000</cmd_min>
+        <initial_position>0</initial_position>
       </plugin>
-  </gazebo> -->
+    </gazebo>
+
+    <gazebo>
+      <plugin
+        filename="gz-sim-joint-position-controller-system"
+        name="gz::sim::systems::JointPositionController">
+        <joint_name>$(arg prefix_rc)/shoulder_lift_joint</joint_name>
+        <topic>$(arg prefix_rc)/shoulder_lift_joint</topic>
+        <p_gain>2000</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>200.00</d_gain>
+        <i_max>100000</i_max>
+        <i_min>-100000</i_min>
+        <cmd_max>100000000</cmd_max>
+        <cmd_min>-100000000</cmd_min>
+        <initial_position>-1</initial_position>
+      </plugin>
+    </gazebo>
+
+    <gazebo>
+      <plugin
+        filename="gz-sim-joint-position-controller-system"
+        name="gz::sim::systems::JointPositionController">
+        <joint_name>$(arg prefix_rc)/elbow_joint</joint_name>
+        <topic>$(arg prefix_rc)/elbow_joint</topic>
+        <p_gain>2000</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>200.00</d_gain>
+        <i_max>100000</i_max>
+        <i_min>-100000</i_min>
+        <cmd_max>100000000</cmd_max>
+        <cmd_min>-100000000</cmd_min>
+        <initial_position>0</initial_position>
+      </plugin>
+    </gazebo>
+
+    <gazebo>
+      <plugin
+        filename="gz-sim-joint-position-controller-system"
+        name="gz::sim::systems::JointPositionController">
+        <joint_name>$(arg prefix_rc)/wrist_1_joint</joint_name>
+        <topic>$(arg prefix_rc)/wrist_1_joint</topic>
+        <p_gain>2000</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>200.00</d_gain>
+        <i_max>100000</i_max>
+        <i_min>-100000</i_min>
+        <cmd_max>100000000</cmd_max>
+        <cmd_min>-100000000</cmd_min>
+        <initial_position>-1</initial_position>
+      </plugin>
+    </gazebo>
+
+    <gazebo>
+      <plugin
+        filename="gz-sim-joint-position-controller-system"
+        name="gz::sim::systems::JointPositionController">
+        <joint_name>$(arg prefix_rc)/wrist_2_joint</joint_name>
+        <topic>$(arg prefix_rc)/wrist_2_joint</topic>
+        <p_gain>2000</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>200.00</d_gain>
+        <i_max>100000</i_max>
+        <i_min>-100000</i_min>
+        <cmd_max>100000000</cmd_max>
+        <cmd_min>-100000000</cmd_min>
+        <initial_position>0</initial_position>
+      </plugin>
+    </gazebo>
+
+    <gazebo>
+      <plugin
+        filename="gz-sim-joint-position-controller-system"
+        name="gz::sim::systems::JointPositionController">
+        <joint_name>$(arg prefix_rc)/wrist_3_joint</joint_name>
+        <topic>$(arg prefix_rc)/wrist_3_joint</topic>
+        <p_gain>2000</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>200.00</d_gain>
+        <i_max>100000</i_max>
+        <i_min>-100000</i_min>
+        <cmd_max>100000000</cmd_max>
+        <cmd_min>-100000000</cmd_min>
+        <initial_position>0</initial_position>
+      </plugin>
+    </gazebo>
+
+    <gazebo>
+      <plugin
+        filename="gz-sim-joint-state-publisher-system"
+        name="gz::sim::systems::JointStatePublisher">
+        <topic>$(arg prefix_rc)/joint_states</topic>
+      </plugin>
+    </gazebo>
+
+    <ros2_control name="name" type="system">
+      <hardware>
+          <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
+          <param name="joint_commands_topic">joint_commands</param>
+          <param name="joint_states_topic">jnt_gz</param>
+          <param name="sum_wrapped_joint_states">false</param>
+      </hardware>
+
+      <joint name="$(arg prefix_rc)/shoulder_pan_joint">
+          <command_interface name="position"/>
+          <state_interface name="position"/>
+          <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="$(arg prefix_rc)/shoulder_lift_joint">
+          <command_interface name="position"/>
+          <state_interface name="position"/>
+          <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="$(arg prefix_rc)/elbow_joint">
+          <command_interface name="position"/>
+          <state_interface name="position"/>
+          <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="$(arg prefix_rc)/wrist_1_joint">
+          <command_interface name="position"/>
+          <state_interface name="position"/>
+          <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="$(arg prefix_rc)/wrist_2_joint">
+          <command_interface name="position"/>
+          <state_interface name="position"/>
+          <state_interface name="velocity"/>
+      </joint>
+
+      <joint name="$(arg prefix_rc)/wrist_3_joint">
+          <command_interface name="position"/>
+          <state_interface name="position"/>
+          <state_interface name="velocity"/>
+      </joint>
+    </ros2_control>
+
+  </xacro:if>
 
 
 </robot>

@@ -6,8 +6,6 @@
   lazy: false               
   direction: BIDIRECTIONAL  
                             
-                            
-
 - ros_topic_name: "/sweepee_2/cmd_vel"
   ros_type_name: "geometry_msgs/msg/Twist"
   gz_type_name: "gz.msgs.Twist"
@@ -16,28 +14,21 @@
   lazy: false               
   direction: BIDIRECTIONAL  
                             
-                            
-
-
 - ros_topic_name: "/sweepee_1/odom"
   ros_type_name: "nav_msgs/msg/Odometry"
   gz_type_name: "gz.msgs.Odometry"
   subscriber_queue: 1      
   publisher_queue: 1       
   lazy: false              
-  direction: GZ_TO_ROS 
-                           
-                           
-
-
+  direction: GZ_TO_ROS                         
+                        
 - ros_topic_name: "/sweepee_2/odom"
   ros_type_name: "nav_msgs/msg/Odometry"
   gz_type_name: "gz.msgs.Odometry"
   subscriber_queue: 1       
   publisher_queue: 1        
   lazy: false               
-  direction: GZ_TO_ROS  
-                            
+  direction: GZ_TO_ROS                         
                             
 - ros_topic_name: "/sweepee_1/lidar"
   ros_type_name: "sensor_msgs/msg/LaserScan"
@@ -47,17 +38,14 @@
   lazy: false               
   direction: GZ_TO_ROS                        
 
-
 - ros_topic_name: "/sweepee_2/lidar"
   ros_type_name: "sensor_msgs/msg/LaserScan"
   gz_type_name: "gz.msgs.LaserScan"
   subscriber_queue: 1       
   publisher_queue: 1        
   lazy: false               
-  direction: GZ_TO_ROS  
-                            
-                            
-
+  direction: GZ_TO_ROS                             
+                        
 - ros_topic_name: "/clock"
   ros_type_name: "rosgraph_msgs/msg/Clock"
   gz_type_name: "gz.msgs.Clock"
@@ -66,7 +54,6 @@
   lazy: false               
   direction: GZ_TO_ROS  
                             
-
 - ros_topic_name: "/tf"
   ros_type_name: "tf2_msgs/msg/TFMessage"
   gz_type_name: "gz.msgs.Pose_V"
@@ -74,4 +61,130 @@
   publisher_queue: 1        
   lazy: false               
   direction: GZ_TO_ROS  
-                                                           
+
+- gz_topic_name: "/sweepee_1/joint_states"
+  ros_topic_name: "/sweepee_1/jnt_gz"
+  ros_type_name: "sensor_msgs/msg/JointState"
+  gz_type_name: "gz.msgs.Model"
+  subscriber_queue: 1       
+  publisher_queue: 1        
+  lazy: false               
+  direction: GZ_TO_ROS  
+
+- gz_topic_name: "/sweepee_2/joint_states"
+  ros_topic_name: "/sweepee_2/jnt_gz"
+  ros_type_name: "sensor_msgs/msg/JointState"
+  gz_type_name: "gz.msgs.Model"
+  subscriber_queue: 1       
+  publisher_queue: 1        
+  lazy: false               
+  direction: GZ_TO_ROS  
+
+- gz_topic_name: "/sweepee_1/shoulder_pan_joint"
+  ros_topic_name: "/sweepee_1/shoulder_pan_joint_cmd"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  subscriber_queue: 1       
+  publisher_queue: 1        
+  lazy: false               
+  direction: ROS_TO_GZ  
+
+- gz_topic_name: "/sweepee_1/shoulder_lift_joint"
+  ros_topic_name: "/sweepee_1/shoulder_lift_joint_cmd"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  subscriber_queue: 1       
+  publisher_queue: 1        
+  lazy: false               
+  direction: ROS_TO_GZ  
+
+- gz_topic_name: "/sweepee_1/elbow_joint"
+  ros_topic_name: "/sweepee_1/elbow_joint_cmd"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  subscriber_queue: 1       
+  publisher_queue: 1        
+  lazy: false               
+  direction: ROS_TO_GZ 
+
+- gz_topic_name: "/sweepee_1/wrist_1_joint"
+  ros_topic_name: "/sweepee_1/wrist_1_joint_cmd"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  subscriber_queue: 1       
+  publisher_queue: 1        
+  lazy: false               
+  direction: ROS_TO_GZ  
+
+- gz_topic_name: "/sweepee_1/wrist_2_joint"
+  ros_topic_name: "/sweepee_1/wrist_2_joint_cmd"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  subscriber_queue: 1       
+  publisher_queue: 1        
+  lazy: false               
+  direction: ROS_TO_GZ  
+
+- gz_topic_name: "/sweepee_1/wrist_3_joint"
+  ros_topic_name: "/sweepee_1/wrist_3_joint_cmd"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  subscriber_queue: 1       
+  publisher_queue: 1        
+  lazy: false               
+  direction: ROS_TO_GZ                                           
+
+
+- gz_topic_name: "/sweepee_2/shoulder_pan_joint"
+  ros_topic_name: "/sweepee_2/shoulder_pan_joint_cmd"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  subscriber_queue: 1       
+  publisher_queue: 1        
+  lazy: false               
+  direction: ROS_TO_GZ  
+
+- gz_topic_name: "/sweepee_2/shoulder_lift_joint"
+  ros_topic_name: "/sweepee_2/shoulder_lift_joint_cmd"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  subscriber_queue: 1       
+  publisher_queue: 1        
+  lazy: false               
+  direction: ROS_TO_GZ  
+
+- gz_topic_name: "/sweepee_2/elbow_joint"
+  ros_topic_name: "/sweepee_2/elbow_joint_cmd"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  subscriber_queue: 1       
+  publisher_queue: 1        
+  lazy: false               
+  direction: ROS_TO_GZ 
+
+- gz_topic_name: "/sweepee_2/wrist_1_joint"
+  ros_topic_name: "/sweepee_2/wrist_1_joint_cmd"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  subscriber_queue: 1       
+  publisher_queue: 1        
+  lazy: false               
+  direction: ROS_TO_GZ  
+
+- gz_topic_name: "/sweepee_2/wrist_2_joint"
+  ros_topic_name: "/sweepee_2/wrist_2_joint_cmd"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  subscriber_queue: 1       
+  publisher_queue: 1        
+  lazy: false               
+  direction: ROS_TO_GZ  
+
+- gz_topic_name: "/sweepee_2/wrist_3_joint"
+  ros_topic_name: "/sweepee_2/wrist_3_joint_cmd"
+  ros_type_name: "std_msgs/msg/Float64"
+  gz_type_name: "gz.msgs.Double"
+  subscriber_queue: 1       
+  publisher_queue: 1        
+  lazy: false               
+  direction: ROS_TO_GZ                        

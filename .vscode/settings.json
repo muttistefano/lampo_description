@@ -1,0 +1,32 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/stefanomutti/lampo_ws/install/ur_robot_driver/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/ur_msgs/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/ur_moveit_config/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/ur_dashboard_msgs/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/slam_toolbox/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/ros_gz_interfaces/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/dwb_msgs/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/nav_2d_msgs/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/build/nav2_simple_commander",
+        "/home/stefanomutti/lampo_ws/install/nav2_simple_commander/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/nav2_msgs/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/nav2_common/lib/python3.10/site-packages",
+        "/opt/ros/rolling/lib/python3.10/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/stefanomutti/lampo_ws/install/ur_robot_driver/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/ur_msgs/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/ur_moveit_config/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/ur_dashboard_msgs/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/slam_toolbox/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/ros_gz_interfaces/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/dwb_msgs/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/nav_2d_msgs/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/build/nav2_simple_commander",
+        "/home/stefanomutti/lampo_ws/install/nav2_simple_commander/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/nav2_msgs/lib/python3.10/site-packages",
+        "/home/stefanomutti/lampo_ws/install/nav2_common/lib/python3.10/site-packages",
+        "/opt/ros/rolling/lib/python3.10/site-packages"
+    ]
+}

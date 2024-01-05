@@ -33,7 +33,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/gino/ROS/lampo_ws_ros2_rolling/install/ur_description/share/ur_description/meshes/ur10/collision/base.stl</uri>
+              <uri>file:///home/stefanomutti/lampo_ws/install/ur_description/share/ur_description/meshes/ur10/collision/base.stl</uri>
             </mesh>
           </geometry>
         </collision>
@@ -42,7 +42,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/gino/ROS/lampo_ws_ros2_rolling/install/lampo_description/share/lampo_description//meshes/sweepee/visual/sweepee.dae</uri>
+              <uri>file:///home/stefanomutti/lampo_ws/install/lampo_description/share/lampo_description//meshes/sweepee/visual/sweepee.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -55,7 +55,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>file:///home/gino/ROS/lampo_ws_ros2_rolling/install/ur_description/share/ur_description/meshes/ur10/visual/base.dae</uri>
+              <uri>file:///home/stefanomutti/lampo_ws/install/ur_description/share/ur_description/meshes/ur10/visual/base.dae</uri>
             </mesh>
           </geometry>
         </visual>

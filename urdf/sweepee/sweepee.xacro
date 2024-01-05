@@ -17,6 +17,11 @@
   
     <!-- Base footprint is on the ground under the robot -->
     <link name="${prefix}base_footprint">
+        <inertial>
+          <origin xyz="0 0 0.0" rpy="0 0 0" />
+          <mass value="150" />
+          <inertia ixx="2.0" ixy="0.01" ixz="0.01" iyy="3.7" iyz="0.01" izz="6.0" />
+      </inertial>
     </link>  
 
 
@@ -66,7 +71,7 @@
 
       <link name='${prefix}front_left_wheel'>
         <inertial>
-          <mass value="1"/>
+          <mass value="5"/>
           <inertia ixx="0.145"  ixy="0"  ixz="0" iyy="0.145" iyz="0" izz="0.125" />
         </inertial>
         <visual>
@@ -83,7 +88,7 @@
 
       <link name='${prefix}rear_left_wheel'>
         <inertial>
-          <mass value="1"/>
+          <mass value="5"/>
           <inertia ixx="0.145"  ixy="0"  ixz="0" iyy="0.145" iyz="0" izz="0.125" />
         </inertial>
         <visual>
@@ -100,7 +105,7 @@
 
       <link name='${prefix}front_right_wheel'>
         <inertial>
-          <mass value="1"/>
+          <mass value="5"/>
           <inertia ixx="0.145"  ixy="0"  ixz="0" iyy="0.145" iyz="0" izz="0.125" />
         </inertial>
         <visual>
@@ -117,7 +122,7 @@
 
       <link name='${prefix}rear_right_wheel'>
         <inertial>
-          <mass value="1"/>
+          <mass value="5"/>
           <inertia ixx="0.145"  ixy="0"  ixz="0" iyy="0.145" iyz="0" izz="0.125" />
         </inertial>
         <visual>
@@ -133,26 +138,26 @@
       </link>
 
       <gazebo reference="${prefix}front_left_wheel">
-        <mu1>1.0</mu1>
-        <mu2>0.0</mu2>
+        <mu1>5.0</mu1>
+        <mu2>1.0</mu2>
         <fdir1 gz:expressed_in='${prefix}base_footprint'>1 -1 0</fdir1>
       </gazebo>
 
       <gazebo reference="${prefix}rear_left_wheel">
-        <mu1>1.0</mu1>
-        <mu2>0.0</mu2>
+        <mu1>5.0</mu1>
+        <mu2>1.0</mu2>
         <fdir1 gz:expressed_in='${prefix}base_footprint'>1 1 0</fdir1>
       </gazebo>
 
       <gazebo reference="${prefix}front_right_wheel">
-        <mu1>1.0</mu1>
-        <mu2>0.0</mu2>
+        <mu1>5.0</mu1>
+        <mu2>1.0</mu2>
         <fdir1 gz:expressed_in='${prefix}base_footprint'>1 1 0</fdir1>
       </gazebo>
 
         <gazebo reference="${prefix}rear_right_wheel">
-        <mu1>1.0</mu1>
-        <mu2>0.0</mu2>
+        <mu1>5.0</mu1>
+        <mu2>1.0</mu2>
         <fdir1 gz:expressed_in='${prefix}base_footprint'>1 -1 0</fdir1>
       </gazebo>
 
@@ -191,10 +196,13 @@
 
 
   <gazebo reference="${prefix}front_laser">
+  <!-- <gazebo> -->
     <sensor name='gpu_lidar' type='gpu_lidar'>"
-        <pose relative_to='${prefix}front_laser'>0 0 0 0 0 0</pose>
+        <!-- <pose relative_to='${prefix}front_laser'>0 0 0 0 0 0</pose> -->
+        <pose relative_to='asd'>0 0 0 0 0 0</pose>
         <topic>${prefix}lidar</topic>
         <update_rate>10</update_rate>
+        <frame_id>asdasd</frame_id>
         <ray>
             <scan>
                 <horizontal>

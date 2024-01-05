@@ -63,11 +63,11 @@ def generate_launch_description():
 
 
         lifecycle_nodes = ['amcl',
-                           'controller_server',
+                        #    'controller_server',
                         #    'smoother_server',
-                           'planner_server',
-                           'behavior_server',
-                           'bt_navigator',
+                        #    'planner_server',
+                        #    'behavior_server',
+                        #    'bt_navigator',
                         #    'waypoint_follower',
                         #    'velocity_smoother'
                         ]
@@ -128,7 +128,7 @@ def generate_launch_description():
                 name='bt_navigator',
                 namespace="sweepee_1",
                 output='screen',
-                prefix=['xterm -e gdb -ex run --args'],
+                # prefix=['xterm -e gdb -ex run --args'],
                 respawn=True,
                 respawn_delay=2.0,
                 parameters=[nav_sw1_params],
@@ -227,26 +227,22 @@ def generate_launch_description():
         nodes_to_start = [
                         map_server,
                         amcl1,
-                        amcl2,
-                        planner_server2,
+                        # amcl2,
+                        # planner_server2,
                         # costmap_follow,
                         lf_map,
-                        TimerAction(
-                                period=2.0,
-                                actions=[lf_2],
-                        ),      
-                        TimerAction(
-                                period=3.0,
-                                actions=[controller_server,planner_server,behavior_server,bt_navigator],
-                        ),                   
+                        # TimerAction(
+                        #         period=2.0,
+                        #         actions=[lf_2],
+                        # ),      
+                        # TimerAction(
+                        #         period=3.0,
+                        #         actions=[controller_server,planner_server,behavior_server,bt_navigator],
+                        # ),                   
                         TimerAction(
                                 period=8.0,
                                 actions=[lf_manager],
                         ),
-                        # TimerAction(
-                        # period=6.0,
-                        # actions=[nav_sw2],
-                        # ),
                         ]
 
         return LaunchDescription(nodes_to_start)
