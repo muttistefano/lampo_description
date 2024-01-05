@@ -1,3 +1,5 @@
+
+!!WORKS IN PROGRESS!!
 This ROS2 package implements the simulation of multiple mobile manipulators in gz.  
 The package has been tested on ros rolling with gazebo Harmonic.  
 The deafult lancher "ros2 launch lampo_description lampo_gz_diff.launch.py" spawns two differential mobile manipulators endowed with an UR10 in a simulated whareouse.  

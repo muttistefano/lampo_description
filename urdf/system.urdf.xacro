@@ -2,9 +2,16 @@
 
 <robot name="mm1" xmlns:xacro="http://ros.org/wiki/xacro" xmlns:gz="http://gazebosim.org/schema">>
 
-  <xacro:include filename="$(find lampo_description)/urdf/sweepee/sweepee.gazebo.xacro" />
-  <xacro:include filename="$(find lampo_description)/urdf/sweepee/sweepee.xacro" />
-  
+  <xacro:arg name="omni" default="false" />
+
+  <xacro:if value="$(arg omni)">
+    <xacro:include filename="$(find lampo_description)/urdf/sweepee/sweepee_omni.xacro" />
+  </xacro:if>
+
+  <xacro:unless value="$(arg omni)">
+    <xacro:include filename="$(find lampo_description)/urdf/sweepee/sweepee_diff.xacro" />
+  </xacro:unless>
+
   <xacro:arg name="name" default="ur"/>
   <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/>
 
@@ -56,7 +63,7 @@
     <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:sweepee>
 
-  <xacro:sweepee_gazebo />
+  <!-- <xacro:sweepee_gazebo /> -->
 
 
    <!-- arm -->
