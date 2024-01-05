@@ -67,12 +67,10 @@
       </visual>
     </link>
 
-    <joint name="${prefix}front_laser_joint" type="revolute">
+    <joint name="${prefix}front_laser_joint" type="fixed">
       <origin xyz="${base_x_size/2-0.15} 0.0 ${base_z_size/2+0.085}" rpy="0 0 0" />
       <parent link="${prefix}base_footprint" />
-      <child link="${prefix}front_laser" />
-      <axis xyz="0 0 1"/>
-      <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="5.1"/>
+      <child link="${prefix}front_laser" /> -->
     </joint>
 
       <link name="${prefix}rear_laser" />

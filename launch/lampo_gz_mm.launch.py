@@ -244,7 +244,7 @@ def generate_launch_description():
         executable="robot_state_publisher",
         namespace="sweepee_2",
         output="screen",
-        parameters=[robot_description_2,frame_prefix_param_2],
+        parameters=[robot_description_2,frame_prefix_param_2,{"use_sim_time": True}],
     )
 
     robot_state_publisher_node_3 = Node(
@@ -269,6 +269,7 @@ def generate_launch_description():
                    '-y', '2.2',
                    '-z', '0.3'],
         remappings=[('/sweepee', 'sweepee_1/robot_description')],
+        parameters=[{"use_sim_time": True}],
     )
 
     sweepee_2_path = os.path.join(get_package_share_directory('lampo_description'),'urdf/amr2.sdf')
@@ -284,6 +285,7 @@ def generate_launch_description():
                    '-x', '-3.0',
                    '-y', '-2.0'],
         remappings=[('/sweepee', 'sweepee_2/robot_description')],
+        parameters=[{"use_sim_time": True}],
     )
 
 ########## CONTROLLERS
@@ -292,7 +294,7 @@ def generate_launch_description():
         package="controller_manager",
         executable="ros2_control_node",
         namespace="sweepee_1",
-        parameters=[robot_description_1, initial_joint_controllers_1],
+        parameters=[robot_description_1, initial_joint_controllers_1,{"use_sim_time": True}],
         output="both",
     )
 
@@ -300,7 +302,7 @@ def generate_launch_description():
         package="controller_manager",
         executable="ros2_control_node",
         namespace="sweepee_2",
-        parameters=[robot_description_2, initial_joint_controllers_2],
+        parameters=[robot_description_2, initial_joint_controllers_2,{"use_sim_time": True}],
         output="both",
     )
 
@@ -308,24 +310,28 @@ def generate_launch_description():
         package="controller_manager",
         executable="spawner",
         arguments=["joint_state_broadcaster", "--controller-manager", "sweepee_1/controller_manager"],
+        parameters=[{"use_sim_time": True}],
     )
 
     position_controller_spawner_1 = Node(
         package="controller_manager",
         executable="spawner",
         arguments=["position_controller", "--controller-manager", "sweepee_1/controller_manager"],
+        parameters=[{"use_sim_time": True}],
     )
 
     joint_state_broadcaster_spawner_2 = Node(
         package="controller_manager",
         executable="spawner",
         arguments=["joint_state_broadcaster", "--controller-manager", "sweepee_2/controller_manager"],
+        parameters=[{"use_sim_time": True}],
     )
 
     position_controller_spawner_2 = Node(
         package="controller_manager",
         executable="spawner",
         arguments=["position_controller", "--controller-manager", "sweepee_2/controller_manager"],
+        parameters=[{"use_sim_time": True}],
     )
 
 
@@ -402,14 +408,16 @@ def generate_launch_description():
             package="lampo_description",
             executable="ros_to_gz_commands.py",
             namespace="sweepee_1",
-            output="screen"
+            output="screen",
+            parameters=[{"use_sim_time": True}],
         )
 
     ros_to_gz_2 = Node(
             package="lampo_description",
             executable="ros_to_gz_commands.py",
             namespace="sweepee_2",
-            output="screen"
+            output="screen",
+            parameters=[{"use_sim_time": True}],
         )
     
 ########## LAUNCHING
