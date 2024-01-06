@@ -303,8 +303,10 @@
         <max_angular_velocity>1</max_angular_velocity>
         <min_angular_velocity>-1</min_angular_velocity>
         <topic>${prefix}cmd_vel</topic>
-        <frame_id>${prefix}base_footprint</frame_id>
+        <frame_id>${prefix}odom</frame_id>
         <odom_topic>${prefix}odom</odom_topic>
+        <child_frame_id>${prefix}base_footprint</child_frame_id>
+        <tf_topic>tf</tf_topic>
       </plugin>
     </gazebo>
 
