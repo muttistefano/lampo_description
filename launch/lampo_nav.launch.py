@@ -63,19 +63,19 @@ def generate_launch_description():
 
 
         lifecycle_nodes = ['amcl',
-                        #    'controller_server',
+                           'controller_server',
                         #    'smoother_server',
-                        #    'planner_server',
-                        #    'behavior_server',
-                        #    'bt_navigator',
+                           'planner_server',
+                           'behavior_server',
+                           'bt_navigator',
                         #    'waypoint_follower',
                         #    'velocity_smoother'
                         ]
         
         lifecycle_map   = ["map_server"]
 
-        lifecycle_2     =  ["amcl",
-                            'planner_server']
+        lifecycle_2     =  ["amcl"]
+                        #     'planner_server']
                         #     "costmap_follow"]
 
         controller_server = Node(
@@ -202,17 +202,6 @@ def generate_launch_description():
                 parameters=[nav_sw2_params],
                 arguments=['--ros-args', '--log-level', "info"])
 
-        costmap_follow = Node(
-                package='nav2_costmap_2d',
-                executable='nav2_costmap_2d',
-                namespace="sweepee_2",
-                name='costmap_follow',
-                output='screen',
-                respawn=True,
-                respawn_delay=2.0,
-                parameters=[nav_sw2_params],
-                arguments=['--ros-args', '--log-level', "info"])
-
         planner_server2 = Node(
                 package='nav2_planner',
                 executable='planner_server',
@@ -227,18 +216,18 @@ def generate_launch_description():
         nodes_to_start = [
                         map_server,
                         amcl1,
-                        # amcl2,
+                        amcl2,
                         # planner_server2,
                         # costmap_follow,
                         lf_map,
-                        # TimerAction(
-                        #         period=2.0,
-                        #         actions=[lf_2],
-                        # ),      
-                        # TimerAction(
-                        #         period=3.0,
-                        #         actions=[controller_server,planner_server,behavior_server,bt_navigator],
-                        # ),                   
+                        TimerAction(
+                                period=2.0,
+                                actions=[lf_2],
+                        ),      
+                        TimerAction(
+                                period=3.0,
+                                actions=[controller_server,planner_server,behavior_server,bt_navigator],
+                        ),                   
                         TimerAction(
                                 period=3.0,
                                 actions=[lf_manager],

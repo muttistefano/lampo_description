@@ -250,8 +250,7 @@ def generate_launch_description():
                    '-name', 'sweepee_1',
                    '-allow_renaming', 'true',
                    '-x', '-3.5',
-                   '-y', '2.2',
-                   '-z', '0.3'],
+                   '-y', '2.2'],
         remappings=[('/sweepee', 'sweepee_1/robot_description')],
         parameters=[{"use_sim_time": True}],
     )

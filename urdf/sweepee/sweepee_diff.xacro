@@ -31,8 +31,8 @@
       </visual>
       <inertial>
           <origin xyz="0 0 0.2" rpy="0 0 0" />
-          <mass value="150" />
-          <inertia ixx="2.0" ixy="0.0" ixz="0.0" iyy="3.7" iyz="0.0" izz="6.0" />
+          <mass value="250" />
+          <inertia ixx="12.0" ixy="0.0" ixz="0.0" iyy="12.0" iyz="0.0" izz="12.0" />
       </inertial>
       <collision>
         <origin xyz="0 0 0.2" rpy="0 0 0" />
@@ -55,7 +55,7 @@
       </inertial>
       <visual>
         <geometry>
-          <sphere length="0.005" radius="0.1"/>
+          <cylinder length="0.005" radius="0.1"/>
         </geometry>
       </visual>
     </link>
@@ -80,12 +80,12 @@
         </inertial>
         <visual>
           <geometry>
-            <sphere length="0.05" radius="0.1"/>
+            <cylinder length="0.05" radius="0.1"/>
           </geometry>
         </visual>
         <collision>
           <geometry>
-            <sphere length="0.05" radius="0.1"/>
+            <cylinder length="0.05" radius="0.1"/>
           </geometry>
         </collision>
       </link>
@@ -97,12 +97,12 @@
         </inertial>
         <visual>
           <geometry>
-            <sphere length="0.05" radius="0.1"/>
+            <cylinder length="0.05" radius="0.1"/>
           </geometry>
         </visual>
         <collision>
           <geometry>
-            <sphere length="0.05" radius="0.1"/>
+            <cylinder length="0.05" radius="0.1"/>
           </geometry>
         </collision>
       </link>
@@ -114,12 +114,12 @@
         </inertial>
         <visual>
           <geometry>
-            <sphere length="0.05" radius="0.1"/>
+            <cylinder length="0.05" radius="0.1"/>
           </geometry>
         </visual>
         <collision>
           <geometry>
-            <sphere length="0.05" radius="0.1"/>
+            <cylinder length="0.05" radius="0.1"/>
           </geometry>
         </collision>
       </link>
@@ -131,12 +131,12 @@
         </inertial>
         <visual>
           <geometry>
-            <sphere length="0.05" radius="0.1"/>
+            <cylinder length="0.05" radius="0.1"/>
           </geometry>
         </visual>
         <collision>
           <geometry>
-            <sphere length="0.05" radius="0.1"/>
+            <cylinder length="0.05" radius="0.1"/>
           </geometry>
         </collision>
       </link>
@@ -198,8 +198,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.0</mu>
-                <mu2>0.0</mu2>
+                <mu>0.05</mu>
+                <mu2>0.01</mu2>
               </ode>
             </friction>
           </surface>
@@ -211,8 +211,8 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.0</mu>
-                <mu2>0.0</mu2>
+                <mu>0.05</mu>
+                <mu2>0.01</mu2>
               </ode>
             </friction>
           </surface>
