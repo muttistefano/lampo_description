@@ -58,7 +58,8 @@ sweepee_1:
         plugin: "nav2_bt_navigator/NavigateToPoseNavigator"
       navigate_through_poses:
         plugin: "nav2_bt_navigator/NavigateThroughPosesNavigator"
-      default_nav_to_pose_bt_xml: "/home/stefanomutti/lampo_ws/src/nav2_cooperative_planner/config/lampo.xml"
+      # default_nav_to_pose_bt_xml: "/home/stefanomutti/lampo_ws/src/nav2_cooperative_planner/config/lampo.xml"
+      
       bt_loop_duration: 10
       default_server_timeout: 20
       plugin_lib_names:
