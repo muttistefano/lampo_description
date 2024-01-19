@@ -65,9 +65,9 @@ def generate_launch_description():
         lifecycle_nodes = ['amcl',
                            'controller_server',
                         #    'smoother_server',
-                           'planner_server',
+                        #    'planner_server',
                            'behavior_server',
-                           'bt_navigator',
+                        #    'bt_navigator',
                         #    'waypoint_follower',
                         #    'velocity_smoother'
                         ]
@@ -75,8 +75,6 @@ def generate_launch_description():
         lifecycle_map   = ["map_server"]
 
         lifecycle_2     =  ["amcl"]
-                        #     'planner_server']
-                        #     "costmap_follow"]
 
         controller_server = Node(
                 package='nav2_controller',
@@ -86,6 +84,7 @@ def generate_launch_description():
                 respawn=True,
                 respawn_delay=2.0,
                 parameters=[nav_sw1_params],
+                remappings=[('cmd_vel', 'cmd_vel_nav')],
                 arguments=['--ros-args', '--log-level', "info"])
         
         nav2_smoother = Node(
@@ -119,7 +118,7 @@ def generate_launch_description():
                 output='screen',
                 respawn=True,
                 respawn_delay=2.0,
-                parameters=[nav_sw1_params],
+                parameters=[nav_sw1_params,{"use_sim_time": True}],
                 arguments=['--ros-args', '--log-level', "info"])
                 
         bt_navigator = Node(
@@ -165,7 +164,8 @@ def generate_launch_description():
                 output='screen',
                 arguments=['--ros-args', '--log-level', "info"],
                 parameters=[{'autostart': True},
-                            {'node_names': lifecycle_nodes}])
+                            {'node_names': lifecycle_nodes},
+                            {"use_sim_time": True}])
 
         lf_map    = Node(
                 package='nav2_lifecycle_manager',
@@ -174,7 +174,8 @@ def generate_launch_description():
                 output='screen',
                 arguments=['--ros-args', '--log-level', "info"],
                 parameters=[{'autostart': True},
-                            {'node_names': lifecycle_map}])   
+                            {'node_names': lifecycle_map},
+                            {"use_sim_time": True}])   
 
         lf_2    = Node(
                 package='nav2_lifecycle_manager',
@@ -184,7 +185,8 @@ def generate_launch_description():
                 output='screen',
                 arguments=['--ros-args', '--log-level', "info"],
                 parameters=[{'autostart': True},
-                            {'node_names': lifecycle_2}])   
+                            {'node_names': lifecycle_2},
+                            {"use_sim_time": True}])   
 
         nav_sw2_params = os.path.join(
             get_package_share_directory('lampo_description'),
@@ -218,18 +220,18 @@ def generate_launch_description():
                         amcl1,
                         amcl2,
                         # planner_server2,
-                        # costmap_follow,
                         lf_map,
                         TimerAction(
-                                period=2.0,
+                                period=1.5,
                                 actions=[lf_2],
                         ),      
                         TimerAction(
                                 period=3.0,
-                                actions=[controller_server,planner_server,behavior_server,bt_navigator],
+                                # actions=[controller_server,planner_server,behavior_server,bt_navigator],
+                                actions=[controller_server,behavior_server],
                         ),                   
                         TimerAction(
-                                period=3.0,
+                                period=4.0,
                                 actions=[lf_manager],
                         ),
                         ]
