@@ -33,7 +33,7 @@ def generate_launch_description():
         nav_sw1_params = os.path.join(
             get_package_share_directory('lampo_description'),
             'config',
-            "nav_params_1.yaml")
+            "nav_params_omni_1.yaml")
 
 
         lifecycle_nodes = ['planner_server','bt_navigator']

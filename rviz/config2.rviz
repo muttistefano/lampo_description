@@ -7,6 +7,7 @@ Panels:
         - /Global Options1
         - /Status1
         - /Map1/Topic1
+        - /Merged1
         - /TF1/Frames1
       Splitter Ratio: 0.6299434900283813
     Tree Height: 751
@@ -28,7 +29,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: LaserScan
+    SyncSource: ""
 Visualization Manager:
   Class: ""
   Displays:
@@ -157,7 +158,7 @@ Visualization Manager:
       Binary representation: false
       Binary threshold: 100
       Class: rviz_default_plugins/Map
-      Color Scheme: map
+      Color Scheme: costmap
       Draw Behind: false
       Enabled: true
       Name: Merged
@@ -378,25 +379,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 45.74311065673828
+      Distance: 48.34443283081055
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 5.579959392547607
-        Y: -1.514212965965271
-        Z: 0.25865480303764343
+        X: 2.385538339614868
+        Y: -3.858321189880371
+        Z: 0.09844508022069931
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.5353972911834717
+      Pitch: 1.5153971910476685
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.12040638923645
+      Yaw: 3.0954058170318604
     Saved: ~
 Window Geometry:
   Displays:

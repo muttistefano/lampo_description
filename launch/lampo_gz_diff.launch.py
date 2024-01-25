@@ -24,7 +24,6 @@ import xacro
 
 def generate_launch_description():
 
-
     declared_arguments = []
     # UR specific arguments
 
@@ -251,7 +250,7 @@ def generate_launch_description():
                    '-allow_renaming', 'true',
                    '-x', '-3.5',
                    '-y', '2.2',
-                   '-Y', '1.3'],
+                   '-Y', '0.3'],
         remappings=[('/sweepee', 'sweepee_1/robot_description')],
         parameters=[{"use_sim_time": True}],
     )

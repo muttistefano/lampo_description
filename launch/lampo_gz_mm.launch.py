@@ -252,7 +252,7 @@ def generate_launch_description():
                    '-allow_renaming', 'true',
                    '-x', '-3.5',
                    '-y', '2.2',
-                   '-z', '0.3'],
+                   '-Y', '0.3'],
         remappings=[('/sweepee', 'sweepee_1/robot_description')],
         parameters=[{"use_sim_time": True}],
     )
@@ -332,7 +332,7 @@ def generate_launch_description():
                 [os.path.join(get_package_share_directory('ros_gz_sim'),
                               'launch', 'gz_sim.launch.py')]),
             launch_arguments={
-                'gz_args': [' -r -v 1 ' + world_path ],
+                'gz_args': [' -r -v 4 ' + world_path ],
                 'gz_version': "8"
             }.items())
             ]
@@ -433,18 +433,6 @@ def generate_launch_description():
             actions=[joint_state_broadcaster_spawner_2,
                      position_controller_spawner_2]
         ),
-        # TimerAction(
-        #     period=18.0,
-        #     actions=[joint_state_broadcaster_spawner_2,initial_joint_controller_spawner_started_2]
-        # ),
-        # TimerAction(
-        #     period=7.0,
-        #     actions=[tf_sw1,tf_sw2,tf_sw3],#rviz_node
-        # ),
-        # TimerAction(
-        #     period=14.0,
-        #     actions=[map_server,nav_sw1],
-        # )
         TimerAction(
             period=7.0,
             actions=[gz_bridge]

@@ -2,8 +2,6 @@
 
 <robot name="eureca" xmlns:xacro="http://www.ros.org/wiki/xacro" xmlns:gz="http://gazebosim.org/schema">
 
-  <!-- <xacro:include filename="$(find lampo_description)/urdf/sweepee/camera.urdf.xacro" /> -->
-
   <xacro:property name="M_PI" value="3.14159"/>
 
 
@@ -17,11 +15,6 @@
   
     <!-- Base footprint is on the ground under the robot -->
     <link name="${prefix}base_footprint">
-        <!-- <inertial>
-          <origin xyz="0 0 0.0" rpy="0 0 0" />
-          <mass value="150" />
-          <inertia ixx="2.0" ixy="0.01" ixz="0.01" iyy="3.7" iyz="0.01" izz="6.0" />
-      </inertial> -->
     </link>  
 
 
@@ -38,8 +31,8 @@
       </visual>
       <inertial>
           <origin xyz="0 0 0.2" rpy="0 0 0" />
-          <mass value="150" />
-          <inertia ixx="2.0" ixy="0.0" ixz="0.0" iyy="3.7" iyz="0.0" izz="6.0" />
+          <mass value="250" />
+          <inertia ixx="12.0" ixy="0.0" ixz="0.0" iyy="12.0" iyz="0.0" izz="12.0" />
       </inertial>
       <collision>
         <origin xyz="0 0 0.2" rpy="0 0 0" />
@@ -62,7 +55,7 @@
       </inertial>
       <visual>
         <geometry>
-          <sphere length="0.005" radius="0.1"/>
+          <cylinder length="0.005" radius="0.1"/>
         </geometry>
       </visual>
     </link>
@@ -87,12 +80,12 @@
         </inertial>
         <visual>
           <geometry>
-            <sphere length="0.05" radius="0.1"/>
+            <cylinder length="0.05" radius="0.1"/>
           </geometry>
         </visual>
         <collision>
           <geometry>
-            <sphere length="0.05" radius="0.1"/>
+            <cylinder length="0.05" radius="0.1"/>
           </geometry>
         </collision>
       </link>
@@ -104,12 +97,12 @@
         </inertial>
         <visual>
           <geometry>
-            <sphere length="0.05" radius="0.1"/>
+            <cylinder length="0.05" radius="0.1"/>
           </geometry>
         </visual>
         <collision>
           <geometry>
-            <sphere length="0.05" radius="0.1"/>
+            <cylinder length="0.05" radius="0.1"/>
           </geometry>
         </collision>
       </link>
@@ -121,12 +114,12 @@
         </inertial>
         <visual>
           <geometry>
-            <sphere length="0.05" radius="0.1"/>
+            <cylinder length="0.05" radius="0.1"/>
           </geometry>
         </visual>
         <collision>
           <geometry>
-            <sphere length="0.05" radius="0.1"/>
+            <cylinder length="0.05" radius="0.1"/>
           </geometry>
         </collision>
       </link>
@@ -138,12 +131,12 @@
         </inertial>
         <visual>
           <geometry>
-            <sphere length="0.05" radius="0.1"/>
+            <cylinder length="0.05" radius="0.1"/>
           </geometry>
         </visual>
         <collision>
           <geometry>
-            <sphere length="0.05" radius="0.1"/>
+            <cylinder length="0.05" radius="0.1"/>
           </geometry>
         </collision>
       </link>
@@ -177,9 +170,9 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.7</mu>
-                <mu2>0.3</mu2>
-                <fdir1 gz:expressed_in="sweepee_1/base_footprint">1 -1 0</fdir1>
+                <mu>1.0</mu>
+                <mu2>0.0</mu2>
+                <fdir1 gz:expressed_in="${prefix}base_footprint">1 -1 0</fdir1>
               </ode>
             </friction>
           </surface>
@@ -191,9 +184,9 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.7</mu>
-                <mu2>0.3</mu2>
-                <fdir1 gz:expressed_in="sweepee_1/base_footprint">1 1 0</fdir1>
+                <mu>1.0</mu>
+                <mu2>0.0</mu2>
+                <fdir1 gz:expressed_in="${prefix}base_footprint">1 1 0</fdir1>
               </ode>
             </friction>
           </surface>
@@ -205,9 +198,9 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.0</mu>
+                <mu>1.0</mu>
                 <mu2>0.0</mu2>
-                <fdir1 gz:expressed_in="sweepee_1/base_footprint">1 1 0</fdir1>
+                <fdir1 gz:expressed_in="${prefix}base_footprint">1 1 0</fdir1>
               </ode>
             </friction>
           </surface>
@@ -219,9 +212,9 @@
           <surface>
             <friction>
               <ode>
-                <mu>0.0</mu>
+                <mu>1.0</mu>
                 <mu2>0.0</mu2>
-                <fdir1 gz:expressed_in="sweepee_1/base_footprint">1 -1 0</fdir1>
+                <fdir1 gz:expressed_in="${prefix}base_footprint">1 -1 0</fdir1>
               </ode>
             </friction>
           </surface>
@@ -234,7 +227,7 @@
         <parent link="${prefix}base_link_sweepee"/>
         <child link="${prefix}front_left_wheel"/>
         <axis xyz="0 0 1"/>
-        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="5.1"/>
+        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="15.1"/>
       </joint>
 
       <joint name='${prefix}front_right_wheel_joint' type='revolute'>
@@ -242,7 +235,7 @@
         <parent link="${prefix}base_link_sweepee"/>
         <child link="${prefix}front_right_wheel"/>
         <axis xyz="0 0 1"/>
-        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="5.1"/>
+        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="15.1"/>
       </joint>
 
       <joint name='${prefix}rear_left_wheel_joint' type='revolute'>
@@ -250,7 +243,7 @@
         <parent link="${prefix}base_link_sweepee"/>
         <child link="${prefix}rear_left_wheel"/>
         <axis xyz="0 0 1"/>
-        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="5.1"/>
+        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="15.1"/>
       </joint>
 
       <joint name='${prefix}rear_right_wheel_joint' type='revolute'>
@@ -258,7 +251,7 @@
         <parent link="${prefix}base_link_sweepee"/>
         <child link="${prefix}rear_right_wheel"/>
         <axis xyz="0 0 1"/>
-        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="5.1"/>
+        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="15.1"/>
       </joint>
 
 
@@ -284,8 +277,8 @@
                 </vertical>
             </scan>
             <range>
-                <min>0.08</min>
-                <max>10.0</max>
+                <min>0.15</min>
+                <max>30.0</max>
                 <resolution>0.01</resolution>
             </range>
         </ray>
@@ -303,14 +296,16 @@
       <back_left_joint>${prefix}rear_left_wheel_joint</back_left_joint>
       <back_right_joint>${prefix}rear_right_wheel_joint</back_right_joint>
       <wheel_separation>0.5</wheel_separation>
-      <wheelbase>0.7</wheelbase>
+      <wheelbase>0.6</wheelbase>
       <wheel_radius>0.1</wheel_radius>
       <min_acceleration>-5</min_acceleration>
       <max_acceleration>5</max_acceleration>
+      <max_velocity>1.5</max_velocity>
       <topic>${prefix}cmd_vel</topic>
-      <frame_id>${prefix}base_footprint</frame_id>
+      <frame_id>${prefix}odom</frame_id>
       <odom_topic>${prefix}odom</odom_topic>
-
+      <child_frame_id>${prefix}base_footprint</child_frame_id>
+      <tf_topic>tf</tf_topic>
     </plugin>
   </gazebo>
 

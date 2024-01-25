@@ -47,7 +47,7 @@ def generate_launch_description():
         nav_sw1_params = os.path.join(
             get_package_share_directory('lampo_description'),
             'config',
-            "nav_params_1.yaml")
+            "nav_params_diff_1.yaml")
 
 
         amcl1 =  Node(
@@ -84,7 +84,7 @@ def generate_launch_description():
                 respawn=True,
                 respawn_delay=2.0,
                 parameters=[nav_sw1_params],
-                remappings=[('cmd_vel', 'cmd_vel_nav')],
+                # remappings=[('cmd_vel', 'cmd_vel_nav')],
                 arguments=['--ros-args', '--log-level', "info"])
         
         nav2_smoother = Node(
@@ -191,7 +191,7 @@ def generate_launch_description():
         nav_sw2_params = os.path.join(
             get_package_share_directory('lampo_description'),
             'config',
-            "nav_params_2.yaml")
+            "nav_params_diff_2.yaml")
 
         amcl2 =  Node(
                 package='nav2_amcl',

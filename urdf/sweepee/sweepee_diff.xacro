@@ -172,7 +172,6 @@
               <ode>
                 <mu>0.7</mu>
                 <mu2>0.3</mu2>
-                <!-- <fdir1 gz:expressed_in="sweepee_1/base_footprint">1 0 0</fdir1> -->
               </ode>
             </friction>
           </surface>
@@ -186,7 +185,6 @@
               <ode>
                 <mu>0.7</mu>
                 <mu2>0.3</mu2>
-                <!-- <fdir1 gz:expressed_in="sweepee_1/base_footprint">1 0 0</fdir1> -->
               </ode>
             </friction>
           </surface>
@@ -225,7 +223,7 @@
         <parent link="${prefix}base_link_sweepee"/>
         <child link="${prefix}front_left_wheel"/>
         <axis xyz="0 0 1"/>
-        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="5.1"/>
+        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="15.1"/>
       </joint>
 
       <joint name='${prefix}front_right_wheel_joint' type='revolute'>
@@ -233,7 +231,7 @@
         <parent link="${prefix}base_link_sweepee"/>
         <child link="${prefix}front_right_wheel"/>
         <axis xyz="0 0 1"/>
-        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="5.1"/>
+        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="15.1"/>
       </joint>
 
       <joint name='${prefix}rear_left_wheel_joint' type='revolute'>
@@ -241,7 +239,7 @@
         <parent link="${prefix}base_link_sweepee"/>
         <child link="${prefix}rear_left_wheel"/>
         <axis xyz="0 0 1"/>
-        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="5.1"/>
+        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="15.1"/>
       </joint>
 
       <joint name='${prefix}rear_right_wheel_joint' type='revolute'>
@@ -249,7 +247,7 @@
         <parent link="${prefix}base_link_sweepee"/>
         <child link="${prefix}rear_right_wheel"/>
         <axis xyz="0 0 1"/>
-        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="5.1"/>
+        <limit effort="10000.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="15.1"/>
       </joint>
 
 

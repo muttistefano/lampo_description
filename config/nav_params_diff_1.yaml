@@ -44,7 +44,7 @@ sweepee_1:
       initial_pose: 
         x: -4.42
         y: 0.12
-        yaw: 1.3
+        yaw: 0.3
       use_sim_time: True
 
   bt_navigator:
@@ -150,19 +150,19 @@ sweepee_1:
       FollowPath:
         plugin: "dwb_core::DWBLocalPlanner"
         debug_trajectory_details: True
-        min_vel_x: -0.5
-        min_vel_y: -0.5
+        min_vel_x: 0.0
+        min_vel_y: 0.0
         max_vel_x: 0.5
-        max_vel_y: 0.5
+        max_vel_y: 0.0
         max_vel_theta: 1.0
-        min_speed_xy: -0.5
+        min_speed_xy:  0.0
         max_speed_xy:  0.5
         min_speed_theta: 0.0
         acc_lim_x: 2.5
-        acc_lim_y: 2.5
+        acc_lim_y: 0.0
         acc_lim_theta: 3.2
         decel_lim_x: -2.5
-        decel_lim_y: -2.5
+        decel_lim_y:  0.0
         decel_lim_theta: -3.2
         vx_samples: 20
         vy_samples: 5
@@ -292,6 +292,7 @@ sweepee_1:
         follower_frame: "sweepee_2/base_footprint"
         leader_frame: "sweepee_1/base_footprint"
         use_final_approach_orientation: true
+        transportation: true
 
   planner_server_rclcpp_node:
     ros__parameters:
