@@ -259,6 +259,7 @@
     <sensor name='gpu_lidar' type='gpu_lidar'>"
         <pose relative_to='${prefix}front_laser'>0 0 0 0 0 0</pose>
         <gz_frame_id>${prefix}front_laser</gz_frame_id>
+        <!-- topic name won^t change from lidar -->
         <topic>${prefix}lidar</topic>
         <update_rate>10</update_rate>
         <ray>
